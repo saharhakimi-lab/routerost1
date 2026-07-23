@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ראוטר על מקל | סימולטור לימוד משופר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Tailwind CSS & Lucide Icons CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+:root{
+  --bg:#1A1F2C; --panel:#242B3D; --panel2:#2E374E; --panel3:#3A4663;
+  --border:#343E56; --border2:#4A597A;
+  --text:#E2E8F0; --muted:#94A3B8; --muted2:#64748B;
+  --v10:#F59E0B; --v10-dim:rgba(245,158,11,0.15);
+  --v20:#EF4444; --v20-dim:rgba(239,68,68,0.15);
+  --v30:#10B981; --v30-dim:rgba(16,185,129,0.15);
+  --stick:#8B5CF6;
+  --ok:#10B981; --bad:#EF4444; --info:#3B82F6;
+  --radius:14px;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; background:var(--bg); color:var(--text);
+  font-family:'Rubik',sans-serif; line-height:1.6;
+  padding-bottom:140px;
+}
+.mono{font-family:'Fira Code',monospace;}
+.wrap{max-width:1100px; margin:0 auto; padding:0 20px;}
+h1,h2,h3{font-weight:700; margin:0 0 8px;}
+p{margin:0 0 12px; color:var(--muted);}
+
+.progressbar{position:sticky; top:0; z-index:40; background:rgba(26,31,44,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
+.progressbar-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:14px;}
+.progressbar-title{font-weight:700; font-size:15px; white-space:nowrap;}
+.steps{display:flex; gap:6px; flex:1;}
+.step{flex:1; height:6px; border-radius:4px; background:var(--panel3); position:relative; overflow:hidden;}
+.step.done{background:var(--ok);}
+.step.active{background:var(--info);}
+.progress-pct{font-size:13px; color:var(--muted); font-family:'Fira Code',monospace; white-space:nowrap;}
+
+header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
+.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--stick); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px;}
+h1.title{font-size:38px; margin-bottom:12px; color:#FFFFFF;}
+h1.title span{color:var(--stick);}
+.subtitle{font-size:16px; max-width:700px; margin:0;}
+
+section{padding:50px 0; border-top:1px solid var(--border);}
+.section-head{margin-bottom:26px;}
+.section-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:13px; margin-bottom:6px;}
+.section-title{font-size:24px; color:#FFFFFF;}
+
+.card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
+
+.problem-card{border-right:4px solid var(--bad);}
+.solution-card{border-right:4px solid var(--ok);}
+.tag{display:inline-block; font-family:'Fira Code',monospace; font-size:11px; padding:3px 8px; border-radius:6px; margin:2px 4px 2px 0;}
+.tag.v10{background:var(--v10-dim); color:var(--v10);}
+.tag.v20{background:var(--v20-dim); color:var(--v20);}
+.tag.v30{background:var(--v30-dim); color:var(--v30);}
+
+.accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px;}
+.acc-head{padding:16px 18px; background:var(--panel); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
+.acc-head:hover{background:var(--panel2);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; background:var(--panel);}
+.acc-body-inner{padding:0 18px 18px;}
+.accordion.open .acc-body{max-height:600px;}
+.acc-arrow{transition:transform .3s; color:var(--muted);}
+.accordion.open .acc-arrow{transform:rotate(180deg);}
+
+.diagram-wrap{background:#11151D; border:2px solid var(--border); border-radius:var(--radius); padding:30px; overflow-x:auto; margin-top:20px;}
+.pc-node{cursor:pointer; transition:transform 0.2s, opacity 0.15s;}
+.pc-node:hover{opacity:0.9; transform:scale(1.02);}
+.controls-row{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:20px;}
+button.btn{background:var(--stick); color:#FFFFFF; border:none; border-radius:8px; padding:12px 22px; font-family:'Rubik'; font-weight:600; font-size:15px; cursor:pointer; transition:transform .1s, opacity .15s;}
+button.btn:hover{opacity:0.9;}
+button.btn:active{transform:scale(0.97);}
+button.btn:disabled{opacity:0.3; cursor:not-allowed;}
+button.btn.secondary{background:var(--panel3); color:var(--text); border:1px solid var(--border2);}
+
+.log-panel{background:#0D1117; border:1px solid var(--border); border-radius:10px; margin-top:16px; padding:16px; font-family:'Fira Code',monospace; font-size:13px; max-height:240px; overflow-y:auto; color:#A1B0CB;}
+.log-line{margin-bottom:8px; animation:fadeIn .3s ease;}
+.log-line .lbl{color:var(--stick); font-weight:bold;}
+
+.terminal{background:#0F141C; border:1px solid var(--border2); border-radius:10px; padding:18px; font-family:'Fira Code',monospace; font-size:13px;}
+.term-topbar{display:flex; gap:6px; margin-bottom:12px; align-items:center;}
+.dot{width:10px; height:10px; border-radius:50%;}
+.dot.r{background:#EF4444;} .dot.y{background:#F59E0B;} .dot.g{background:#10B981;}
+.term-output{white-space:pre-wrap; color:#94A3B8; margin-bottom:10px; min-height:40px;}
+.term-output .ok{color:#10B981;}
+.term-output .bad{color:#EF4444;}
+.term-output .hint{color:#F59E0B;}
+.term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:12px;}
+.prompt{color:#10B981; white-space:nowrap;}
+input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none;}
+
+.task-box{background:var(--panel2); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
+.task-title{font-weight:600; margin-bottom:4px; color:var(--v10);}
+.task-progress{font-family:'Fira Code',monospace; font-size:12px; color:var(--muted);}
+
+.quiz-q{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px;}
+.quiz-q-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:12px; margin-bottom:6px;}
+.quiz-opts{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
+.quiz-opt{background:var(--panel3); border:1px solid var(--border2); border-radius:8px; padding:14px; cursor:pointer; text-align:right; font-size:14px; transition:border-color 0.15s;}
+.quiz-opt:hover{border-color:var(--muted);}
+.quiz-opt.correct{background:rgba(16,185,129,0.15); border-color:var(--ok); color:var(--ok);}
+.quiz-opt.wrong{background:rgba(239,68,68,0.15); border-color:var(--bad); color:var(--bad);}
+.quiz-opt.disabled{pointer-events:none;}
+.quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none;}
+.quiz-explain.show{display:block;}
+
+.completion{text-align:center; padding:40px 20px; background:var(--panel); border:2px solid var(--ok); border-radius:var(--radius); display:none;}
+.completion.show{display:block;}
+
+.footer-note{text-align:center; color:var(--muted2); font-size:12px; margin-top:50px;}
+::-webkit-scrollbar{width:8px; height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border2); border-radius:4px;}
+</style>
+</head>
+<body>
+
+<div class="progressbar">
+  <div class="progressbar-inner">
+    <div class="progressbar-title">🥢 ראוטר על מקל</div>
+    <div class="steps" id="stepsBar"></div>
+    <div class="progress-pct" id="progressPct">0%</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header class="hero">
+  <div class="hero-text">
+    <div class="eyebrow">Router on a Stick · Inter-VLAN Routing</div>
+    <h1 class="title">ראוטר על <span>מקל</span></h1>
+    <p class="subtitle">איך ממשק פיזי אחד בראוטר, עם קצת עקרון של תיוג VLAN, מנתב תעבורה בין כמה רשתות וירטואליות שונות בלי לבזבז פורט לכל VLAN.</p>
+  </div>
+</header>
+
+<section id="s1">
+<div class="section-head">
+  <div class="section-num">01 — הבנה</div>
+  <h2 class="section-title">למה בכלל צריך "ראוטר על מקל"?</h2>
+</div>
+
+<div class="grid2">
+  <div class="card problem-card">
+    <h3>🚧 הבעיה</h3>
+    <p>בבית הספר יש 3 VLAN-ים נפרדים על אותו מתג: <span class="tag v10">VLAN 10 · מורים</span><span class="tag v20">VLAN 20 · עיצוב</span><span class="tag v30">VLAN 30 · רשתות</span></p>
+    <p>VLAN הוא שידור מבודד — מכשיר ב-VLAN 10 פיזית לא יכול "לשמוע" מכשיר ב-VLAN 20. כדי לנתב ביניהם צריך שכבה 3 — ראוטר.</p>
+    <p>הפתרון הנאיבי: לחבר כבל פיזי נפרד מהראוטר לכל VLAN בנפרד. זה עובד, אבל בזבזני ויקר בממשקים פיזיים.</p>
+  </div>
+  <div class="card solution-card">
+    <h3>✅ הפתרון: ראוטר על מקל</h3>
+    <p>במקום כבל לכל VLAN — כבל <b>אחד</b> (Trunk Link) בין המתג לראוטר, שמעביר את כל ה-VLAN-ים יחד, כל אחד עם תג 802.1Q משלו.</p>
+    <p>בראוטר יוצרים ממשקי-משנה (subinterfaces) וירטואליים על גבי אותו פורט פיזי — g0/0.10, g0/0.20, g0/0.30 — כל אחד "שייך" ל-VLAN אחר.</p>
+  </div>
+</div>
+</section>
+
+<section id="s2">
+<div class="section-head">
+  <div class="section-num">02 — איך זה עובד בפועל</div>
+  <h2 class="section-title">802.1Q, encapsulation ו-subinterfaces</h2>
+</div>
+
+<div id="acc1" class="accordion">
+  <div class="acc-head" onclick="toggleAcc('acc1')"><span>מהו תיוג 802.1Q (VLAN tagging)?</span><span class="acc-arrow">▾</span></div>
+  <div class="acc-body"><div class="acc-body-inner">
+    <p>כשמסגרת (frame) עוברת בקישור trunk, המתג מוסיף לה תג קטן בכותרת שאומר "אני שייכת ל-VLAN 10". זו התוספת שמאפשרת לערבב כמה VLAN-ים על כבל פיזי אחד בלי לערבב ביניהם.</p>
+  </div></div>
+</div>
+
+<div id="acc2" class="accordion">
+  <div class="acc-head" onclick="toggleAcc('acc2')"><span>מהו subinterface?</span><span class="acc-arrow">▾</span></div>
+  <div class="acc-body"><div class="acc-body-inner">
+    <p>ממשק וירטואלי שנוצר "מעל" ממשק פיזי אחד. למשל, על גבי GigabitEthernet0/0 יוצרים את g0/0.10 ומשייכים לו את ה-IP שמשמש כ-Gateway של ה-VLAN המתאים.</p>
+  </div></div>
+</div>
+</section>
+
+<section id="s3">
+<div class="section-head">
+  <div class="section-num">03 — תרגול חשיבה: הדמיית רשת</div>
+  <h2 class="section-title">שלח חבילה ותעקוב אחרי המסלול שלה</h2>
+</div>
+<p>בחר מחשב מקור ומחשב יעד ב-VLAN שונה, ולחץ "שלח חבילה" כדי לראות בדיוק מה קורה בכל שלב — כולל תיוג, decapsulation וניתוב ברמת האייקונים.</p>
+
+<div class="diagram-wrap">
+<svg id="netDiagram" viewBox="0 0 1000 550" style="width:100%; display:block;">
+  
+  <line x1="250" y1="420" x2="500" y2="280" stroke="#4A597A" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="500" y1="420" x2="500" y2="280" stroke="#4A597A" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="750" y1="420" x2="500" y2="280" stroke="#4A597A" stroke-width="2" stroke-dasharray="4 4"/>
+  
+  <line id="trunkLine" x1="500" y1="220" x2="500" y2="110" stroke="#8B5CF6" stroke-width="5"/>
+  
+  <text x="515" y="210" fill="#94A3B8" font-family="Fira Code" font-size="12" font-weight="500">Fa0/24</text>
+  <text x="515" y="125" fill="#94A3B8" font-family="Fira Code" font-size="12" font-weight="500">Gi0/0</text>
+
+  <g transform="translate(460, 30)">
+    <circle cx="40" cy="40" r="38" fill="#2E374E" stroke="#8B5CF6" stroke-width="3"/>
+    <path d="M 15 40 L 65 40 M 65 40 L 55 33 M 65 40 L 55 47" stroke="#8B5CF6" stroke-width="3" fill="none"/>
+    <path d="M 40 15 L 40 65 M 40 65 L 33 55 M 40 65 L 47 55" stroke="#8B5CF6" stroke-width="3" fill="none"/>
+    <path d="M 65 40 L 15 40 M 15 40 L 25 33 M 15 40 L 25 47" stroke="#8B5CF6" stroke-width="3" fill="none"/>
+    <path d="M 40 15 L 40 65 M 40 15 L 33 25 M 40 15 L 47 25" stroke="#8B5CF6" stroke-width="3" fill="none"/>
+  </g>
+  
+  <g transform="translate(560, 25)">
+    <rect width="180" height="85" rx="8" fill="#1E2330" stroke="#4A597A" stroke-width="1.5"/>
+    <text x="135" y="22" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">Router_Core</text>
+    <text x="135" y="42" fill="#F59E0B" font-family="Fira Code" font-size="11">g0/0.10 (10.10.10.1)</text>
+    <text x="135" y="59" fill="#EF4444" font-family="Fira Code" font-size="11">g0/0.20 (10.20.20.1)</text>
+    <text x="135" y="76" fill="#10B981" font-family="Fira Code" font-size="11">g0/0.30 (10.30.30.1)</text>
+  </g>
+
+  <g transform="translate(560, 145)">
+    <rect width="160" height="40" rx="6" fill="rgba(139, 92, 246, 0.1)" stroke="rgba(139, 92, 246, 0.4)" stroke-width="1"/>
+    <text x="135" y="18" fill="#C084FC" font-family="Rubik" font-size="12" font-weight="600">Trunk Link (Stick)</text>
+    <text x="135" y="32" fill="#94A3B8" font-family="Fira Code" font-size="10">802.1Q Tags Allowed</text>
+  </g>
+
+
+  <g transform="translate(460, 220)">
+    <rect width="80" height="45" rx="6" fill="#2E374E" stroke="#3B82F6" stroke-width="3"/>
+    <path d="M 15 15 L 50 15 M 50 15 L 42 10 M 50 15 L 42 20" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
+    <path d="M 65 30 L 30 30 M 30 30 L 38 25 M 30 30 L 38 35" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
+  </g>
+  <text x="500" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">Switch_Main</text>
+
+
+  <g class="pc-node" id="node10" onclick="selectNode('10')">
+    <g transform="translate(215, 340)">
+      <rect x="5" y="5" width="50" height="35" rx="4" fill="#2E374E" stroke="#F59E0B" stroke-width="2.5"/>
+      <path d="M 23 40 L 37 40 M 30 40 L 30 46 M 15 46 L 45 46" stroke="#F59E0B" stroke-width="2.5" fill="none"/>
+      <rect x="62" y="8" width="12" height="38" rx="2" fill="#2E374E" stroke="#F59E0B" stroke-width="2"/>
+    </g>
+    <g transform="translate(150, 410)">
+      <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#F59E0B" stroke-width="2"/>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 10 · מורים</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.10.10.50</text>
+      <text x="100" y="66" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="11">GW: 10.10.10.1</text>
+    </g>
+  </g>
+
+  <g class="pc-node" id="node20" onclick="selectNode('20')">
+    <g transform="translate(465, 340)">
+      <rect x="5" y="5" width="50" height="35" rx="4" fill="#2E374E" stroke="#EF4444" stroke-width="2.5"/>
+      <path d="M 23 40 L 37 40 M 30 40 L 30 46 M 15 46 L 45 46" stroke="#EF4444" stroke-width="2.5" fill="none"/>
+      <rect x="62" y="8" width="12" height="38" rx="2" fill="#2E374E" stroke="#EF4444" stroke-width="2"/>
+    </g>
+    <g transform="translate(400, 410)">
+      <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#EF4444" stroke-width="2"/>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 20 · עיצוב</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.20.20.50</text>
+      <text x="100" y="66" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="11">GW: 10.20.20.1</text>
+    </g>
+  </g>
+
+  <g class="pc-node" id="node30" onclick="selectNode('30')">
+    <g transform="translate(715, 340)">
+      <rect x="5" y="5" width="50" height="35" rx="4" fill="#2E374E" stroke="#10B981" stroke-width="2.5"/>
+      <path d="M 23 40 L 37 40 M 30 40 L 30 46 M 15 46 L 45 46" stroke="#10B981" stroke-width="2.5" fill="none"/>
+      <rect x="62" y="8" width="12" height="38" rx="2" fill="#2E374E" stroke="#10B981" stroke-width="2"/>
+    </g>
+    <g transform="translate(650, 410)">
+      <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#10B981" stroke-width="2"/>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 30 · רשתות</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.30.30.50</text>
+      <text x="100" y="66" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="11">GW: 10.30.30.1</text>
+    </g>
+  </g>
+
+  <g id="movingPacket" style="display:none;">
+    <rect x="-25" y="-14" width="50" height="28" rx="6" fill="#8B5CF6" stroke="#FFFFFF" stroke-width="1.5"/>
+    <text id="movingPacketLabel" x="0" y="4" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="10" font-weight="800">TAG</text>
+  </g>
+</svg>
+
+<div class="controls-row">
+  <span id="selInfo" style="color:var(--muted); font-size:14px; font-weight: 500;">לחץ על מחשב מקור כדי להתחיל...</span>
+</div>
+<div class="controls-row">
+  <button class="btn" id="sendBtn" onclick="sendPacket()" disabled>שלח חבילה בין רשתות 🚀</button>
+  <button class="btn secondary" onclick="resetSim()">איפוס בחירה</button>
+</div>
+<div class="log-panel" id="simLog">
+  <div class="log-line">מחכה לבחירת מקור ויעד מהמחשבים למטה...</div>
+</div>
+</div>
+</section>
+
+<section id="s4">
+<div class="section-head">
+  <div class="section-num">04 — תרגול מעשי</div>
+  <h2 class="section-title">הגדר subinterfaces כמו מהנדס רשת אמיתי</h2>
+</div>
+<p>המשימה: להגדיר את ה-subinterface של VLAN 20 (מגמת עיצוב) על הראוטר. הקלד את הפקודות בטרמינל, שלב אחר שלב.</p>
+
+<div class="task-box">
+  <div class="task-title">משימה: g0/0.20 — VLAN 20, כתובת רשת 10.20.20.1/24</div>
+  <div class="task-progress" id="taskProgress">שלב 1 מתוך 4</div>
+</div>
+
+<div class="terminal">
+  <div class="term-topbar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span style="margin-right:8px; color:var(--muted2); font-size:12px;">Router_Core-CLI</span></div>
+  <div class="term-output" id="termOutput">Router> enable
+Router# configure terminal
+Router(config)# interface g0/0.20
+<span class="hint">הקלד את פקודת ה-encapsulation המתאימה עבור vlan 20 ולחץ Enter</span></div>
+  <div class="term-input-row">
+    <span class="prompt" id="termPrompt">Router(config-subif)#</span>
+    <input type="text" class="term-input" id="termInput" placeholder="הקלד פקודת קונפיגורציה..." onkeydown="if(event.key==='Enter')submitCmd()">
+  </div>
+</div>
+</section>
+
+<section id="s5">
+<div class="section-head">
+  <div class="section-num">05 — חידון חשיבה</div>
+  <h2 class="section-title">בדוק את ההבנה שלך</h2>
+</div>
+<div id="quizContainer"></div>
+</section>
+
+<div class="completion" id="completionBox">
+  <h2>🎉 כל הכבוד! סיימת את כל השלבים בהצלחה!</h2>
+  <p>אתה מבין עכשיו בצורה מושלמת איך ממשק פיזי בודד משרת רשתות רבות באמצעות תיוג חכם.</p>
+</div>
+
+<div class="footer-note">סימולטור לימוד אינטראקטיבי — רשתות ותקשורת 2026</div>
+</div>
+
+<!-- כפתור עזרה צף קבוע בפינה התחתונה עם אווטר מובנה -->
+<div class="fixed bottom-6 left-6 z-50 no-print">
+    <button id="openHelpModalBtn" class="flex items-center gap-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-lg shadow-cyan-500/20 transition-all duration-300 transform hover:scale-105 group border border-cyan-400/30">
+        <!-- אווטר קטן בתוך הכפתור -->
+        <div class="w-8 h-8 rounded-full border border-white/40 overflow-hidden bg-slate-950 flex-shrink-0 shadow-inner">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר בוט עזרה" class="w-full h-full object-cover">
+        </div>
+        <span>בוט עזרה</span>
+    </button>
+</div>
+
+<!-- חלונית עזרה צפה (Modal) עם אווטר מורחב -->
+<div id="helpModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-all duration-300">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 max-w-sm w-full text-center relative shadow-2xl shadow-cyan-500/5 transform scale-95 transition-transform duration-300" id="helpModalContent">
+        <!-- כפתור סגירה X -->
+        <button id="closeHelpModalBtn" class="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors p-1 rounded-lg hover:bg-slate-800">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+        
+        <!-- אווטר התמונה בחלונית -->
+        <div class="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-cyan-400/50 p-1 bg-slate-950 shadow-lg shadow-cyan-500/20 overflow-hidden">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="תמונת בוט עזרה" class="w-full h-full object-cover rounded-full">
+        </div>
+
+        <h3 class="text-lg font-black text-white mb-2">צריך עזרה במשימה?</h3>
+        <p class="text-sm text-slate-400 mb-6 leading-relaxed">בוט העזרה הרשמי של האקדמיה זמין כעת כדי לענות על שאלות, להסביר מושגים ולכוון אותך לפתרון המלא!</p>
+        
+        <!-- כפתור הפניה לקישור הבוט -->
+        <a href="https://gemini.google.com/gem/167016ac4a4b/66c3b83daa7940ef?usp=sharing" target="_blank" class="w-full flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-black py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/10">
+            <span>הפעל את בוט העזרה</span>
+            <i data-lucide="external-link" class="w-4 h-4"></i>
+        </a>
+    </div>
+</div>
+
+<script>
+const PROGRESS_KEY = "ros_progress_v2";
+const stepIds = ["s1","s2","s3","s4","s5"];
+let progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
+
+function renderStepsBar(){
+  const bar = document.getElementById("stepsBar");
+  if(!bar) return;
+  bar.innerHTML = "";
+  stepIds.forEach(id=>{
+    const d = document.createElement("div");
+    d.className = "step" + (progress[id] ? " done" : "");
+    bar.appendChild(d);
+  });
+  const done = stepIds.filter(id=>progress[id]).length;
+  document.getElementById("progressPct").textContent = Math.round(done/stepIds.length*100) + "%";
+  if(done === stepIds.length){
+    document.getElementById("completionBox").classList.add("show");
+  }
+}
+function markDone(id){
+  progress[id] = true;
+  localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+  renderStepsBar();
+}
+renderStepsBar();
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting && e.intersectionRatio > 0.4){
+      markDone(e.target.id);
+    }
+  });
+}, {threshold:0.4});
+stepIds.forEach(id=>{ const el = document.getElementById(id); if(el) io.observe(el); });
+
+function toggleAcc(id){
+  document.getElementById(id).classList.toggle("open");
+}
+
+// לוגיקת סימולציה משופרת
+const vlanColors = {10:"#F59E0B", 20:"#EF4444", 30:"#10B981"};
+const coords = {
+  pc10: {x:250, y:410},
+  pc20: {x:500, y:410},
+  pc30: {x:750, y:410},
+  switch: {x:500, y:242},
+  router: {x:500, y:70}
+};
+
+let selSrc = null;
+let selDst = null;
+
+function selectNode(vlan) {
+  if (!selSrc) {
+    selSrc = vlan;
+    document.getElementById("node" + vlan).style.transform = "scale(1.05)";
+    document.getElementById("selInfo").innerHTML = "נבחר מקור: <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b>. עכשיו בחר מחשב יעד (ב-VLAN שונה).";
+  } else if (!selDst) {
+    if (vlan === selSrc) {
+      log("⚠️ לא ניתן לבחור את אותו ה-VLAN כרשת יעד. ניתוב מתבצע רק בין רשתות שונות!");
+      return;
+    }
+    selDst = vlan;
+    document.getElementById("node" + vlan).style.transform = "scale(1.05)";
+    document.getElementById("selInfo").innerHTML = "מקור: <b style='color:"+vlanColors[selSrc]+"'>VLAN "+selSrc+"</b> | יעד: <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b>";
+    document.getElementById("sendBtn").disabled = false;
+  }
+}
+
+function log(text){
+  const panel = document.getElementById("simLog");
+  const line = document.createElement("div");
+  line.className = "log-line";
+  line.innerHTML = text;
+  panel.appendChild(line);
+  panel.scrollTop = panel.scrollHeight;
+}
+
+function resetSim(){
+  if(selSrc) document.getElementById("node" + selSrc).style.transform = "none";
+  if(selDst) document.getElementById("node" + selDst).style.transform = "none";
+  selSrc = null;
+  selDst = null;
+  document.getElementById("selInfo").textContent = "לחץ על מחשב מקור כדי להתחיל...";
+  document.getElementById("sendBtn").disabled = true;
+  document.getElementById("simLog").innerHTML = '<div class="log-line">מחכה לבחירת מקור ויעד מהמחשבים למטה...</div>';
+  document.getElementById("movingPacket").style.display = "none";
+}
+
+async function animatePacket(x1, y1, x2, y2, color, label, duration) {
+  const pkt = document.getElementById("movingPacket");
+  const rect = pkt.querySelector("rect");
+  const txt = document.getElementById("movingPacketLabel");
+  rect.setAttribute("fill", color);
+  txt.textContent = label;
+  pkt.style.display = "block";
+  
+  const steps = 40;
+  for(let i=0; i<=steps; i++) {
+    const t = i / steps;
+    const currentX = x1 + (x2 - x1) * t;
+    const currentY = y1 + (y2 - y1) * t;
+    pkt.setAttribute("transform", `translate(${currentX}, ${currentY})`);
+    await new Promise(r => setTimeout(r, duration / steps));
+  }
+}
+
+async function sendPacket() {
+  document.getElementById("sendBtn").disabled = true;
+  document.getElementById("simLog").innerHTML = "";
+  
+  const s = selSrc;
+  const d = selDst;
+  
+  // 1. מחשב לסוויטש
+  log("<span class='lbl'>[שלב 1]</span> המחשב ב-VLAN " + s + " שולח את המסגרת (Frame) לכיוון הסוויטש. הקישור הוא Access ולכן החבילה יוצאת <b>ללא תיוג</b>.");
+  await animatePacket(coords["pc"+s].x, coords["pc"+s].y, coords.switch.x, coords.switch.y, vlanColors[s], "DATA", 800);
+  
+  // 2. סוויטש לראוטר
+  log("<span class='lbl'>[שלב 2]</span> הסוויטש מקבל את הפריים, מזהה שפורט הכניסה שייך ל-VLAN " + s + ", ומתייג את הפריים עם מזהה <b>802.1Q Tag: " + s + "</b> לפני העברתו ב-Trunk.");
+  await animatePacket(coords.switch.x, coords.switch.y, coords.router.x, coords.router.y, "#8B5CF6", "TAG: " + s, 900);
+  
+  // 3. עיבוד בראוטר
+  log("<span class='lbl'>[שלב 3]</span> הראוטר מקבל את החבילה בממשק המשנה <span style='color:"+vlanColors[s]+"'>g0/0." + s + "</span>, מבצע Decapsulation (הסרת התג) ובודק את טבלת הניתוב שלו.");
+  await new Promise(r => setTimeout(r, 1200));
+  
+  log("<span class='lbl'>[שלב 4]</span> הראוטר רואה שרשת היעד מחוברת ישירות לממשק המשנה שלו <span style='color:"+vlanColors[d]+"'>g0/0." + d + "</span>. הוא אורז את החבילה מחדש עם <b>תג היעד החדש: " + d + "</b>.");
+  
+  // 4. ראוטר חזרה לסוויטש
+  log("<span class='lbl'>[שלב 5]</span> החבילה נשלחת בחזרה <b>על אותו כבל פיזי (המקל)</b> עם התג החדש.");
+  await animatePacket(coords.router.x, coords.router.y, coords.switch.x, coords.switch.y, "#8B5CF6", "TAG: " + d, 900);
+  
+  // 5. סוויטש למחשב היעד
+  log("<span class='lbl'>[שלב 6]</span> הסוויטש מקבל את הפריים המתויג, מסיר את תג ה-VLAN ומעביר פריים נקי למחשב היעד ב-VLAN " + d + ".");
+  await animatePacket(coords.switch.x, coords.switch.y, coords["pc"+d].x, coords["pc"+d].y, vlanColors[d], "DATA", 800);
+  
+  log("<span class='lbl'>✅ הצלחה!</span> החבילה הגיעה ליעדה בשלום. שים לב כיצד ממשק פיזי יחיד של הראוטר שימש לשני כיווני התנועה בו-זמנית.");
+  document.getElementById("movingPacket").style.display = "none";
+  document.getElementById("sendBtn").disabled = false;
+}
+
+// קוד ה-CLI
+const cliSteps = [
+  {expect:/^encapsulation\s+dot1q\s+20\s*$/i, ok:"מעולה! הגדרת בהצלחה תיוג מסוג 802.1Q עבור VLAN 20.", cmd:"encapsulation dot1q 20"},
+  {expect:/^ip\s+address\s+10\.20\.20\.1\s+255\.255\.255\.0\s*$/i, ok:"מצוין! כתובת ה-IP הוגדרה ומשמשת כעת כ-Default Gateway.", cmd:"ip address 10.20.20.1 255.255.255.0"},
+  {expect:/^no\s+shutdown\s*$/i, ok:"הממשק הווירטואלי עלה ועבר למצב Up!", cmd:"no shutdown"},
+  {expect:/^exit\s*$/i, ok:"יצאת כראוי. הגדרת ה-Subinterface הושלמה במלואה! 🏆", cmd:"exit"}
+];
+let cliStep = 0;
+
+function submitCmd(){
+  const input = document.getElementById("termInput");
+  const val = input.value.trim();
+  const output = document.getElementById("termOutput");
+  const prompt = document.getElementById("termPrompt").textContent;
+  if(val === ""){ return; }
+  if(cliStep >= cliSteps.length){ input.value=""; return; }
+  
+  const step = cliSteps[cliStep];
+  if(step.expect.test(val)){
+    output.innerHTML += "\n" + prompt + " " + val + "\n<span class='ok'>✔ " + step.ok + "</span>";
+    cliStep++;
+    if(cliStep < cliSteps.length){
+      output.innerHTML += "\n<span class='hint'>שלב הבא: הזן את הפקודה הבאה ברצף הלוגי</span>";
+      document.getElementById("taskProgress").textContent = "שלב " + (cliStep+1) + " מתוך " + cliSteps.length;
+    } else {
+      document.getElementById("taskProgress").textContent = "הושלם בהצלחה! ✅";
+      markDone("s4");
+    }
+  } else {
+    output.innerHTML += "\n" + prompt + " " + val + "\n<span class='bad'>✘ פקודה שגויה או לא מדויקת במצב זה. נסה שוב.</span>";
+  }
+  input.value = "";
+  output.scrollTop = output.scrollHeight;
+}
+
+// קוד החידון
+const quizData = [
+  {
+    q: "מה קורה כשהראוטר מקבל frame מתויג מערוץ ה-Trunk?",
+    opts: ["הוא זורק אותו מיד עקב חוסר התאמה בשכבה 2", "הוא מבצע Decapsulation (מסיר את התג), מנתב לפי IP, ומוסיף תג VLAN מתאים ליעד", "הוא מעביר אותו הלאה ללא כל שינוי בתג", "הוא משנה את מצב הפורט באופן אוטומטי ל-Access"],
+    correct: 1,
+    explain: "הראוטר קורא את התג כדי לדעת מאיזה ממשק משנה הוא הגיע, מנתב לפי כתובת השכבה השלישית (IP), ואז מוסיף את תג ה-VLAN החדש של פורט היעד."
+  },
+  {
+    q: "איזה סוג פורט חובה להגדיר במתג (Switch) בצד שמחובר ישירות אל הראוטר?",
+    opts: ["Access Port", "Trunk Port", "Console Port", "Routed Port"],
+    correct: 1,
+    explain: "פורט Trunk הוא היחיד שמסוגל להעביר ולשמר את התיוגים של מספר רשתות VLAN במקביל על גבי כבל פיזי אחד."
+  }
+];
+
+function renderQuiz(){
+  const container = document.getElementById("quizContainer");
+  if(!container) return;
+  quizData.forEach((item, qi)=>{
+    const qDiv = document.createElement("div");
+    qDiv.className = "quiz-q";
+    qDiv.innerHTML = "<div class='quiz-q-num'>שאלה " + (qi+1) + " מתוך " + quizData.length + "</div><div><b>" + item.q + "</b></div>";
+    const optsDiv = document.createElement("div");
+    optsDiv.className = "quiz-opts";
+    item.opts.forEach((opt, oi)=>{
+      const b = document.createElement("div");
+      b.className = "quiz-opt";
+      b.textContent = opt;
+      b.onclick = ()=>answerQuiz(qi, oi);
+      optsDiv.appendChild(b);
+    });
+    qDiv.appendChild(optsDiv);
+    const explainDiv = document.createElement("div");
+    explainDiv.className = "quiz-explain";
+    explainDiv.id = "explain-" + qi;
+    explainDiv.textContent = item.explain;
+    qDiv.appendChild(explainDiv);
+    container.appendChild(qDiv);
+  });
+}
+let quizAnswered = {};
+function answerQuiz(qi, oi){
+  if(quizAnswered[qi]) return;
+  quizAnswered[qi] = true;
+  const item = quizData[qi];
+  const opts = document.querySelectorAll(".quiz-q")[qi].querySelectorAll(".quiz-opt");
+  opts.forEach((el, i)=>{
+    el.classList.add("disabled");
+    if(i === item.correct) el.classList.add("correct");
+    else if(i === oi) el.classList.add("wrong");
+  });
+  document.getElementById("explain-"+qi).classList.add("show");
+  if(Object.keys(quizAnswered).length === quizData.length){
+    markDone("s5");
+  }
+}
+renderQuiz();
+
+// סקריפט להפעלת חלונית העזרה
+document.addEventListener('DOMContentLoaded', function() {
+    // טעינת אייקונים מבית Lucide
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+
+    const modal = document.getElementById('helpModal');
+    const modalContent = document.getElementById('helpModalContent');
+    const openBtn = document.getElementById('openHelpModalBtn');
+    const closeBtn = document.getElementById('closeHelpModalBtn');
+
+    if(openBtn && modal && modalContent && closeBtn) {
+        openBtn.addEventListener('click', () => {
+            modal.classList.remove('hidden');
+            setTimeout(() => modalContent.classList.remove('scale-95'), 10);
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modalContent.classList.add('scale-95');
+            setTimeout(() => modal.classList.add('hidden'), 150);
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modalContent.classList.add('scale-95');
+                setTimeout(() => modal.classList.add('hidden'), 150);
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
