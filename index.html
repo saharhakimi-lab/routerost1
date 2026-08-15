@@ -43,6 +43,24 @@ p{margin:0 0 12px; color:var(--muted);}
 .progress-pct{font-size:13px; color:var(--muted); font-family:'Fira Code',monospace; white-space:nowrap;}
 
 header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
+.hero-content{display:flex; align-items:center; justify-content:space-between; gap:24px;}
+.crazy-avatar{
+  width:110px; height:110px; border-radius:50%;
+  border:3px solid var(--stick);
+  box-shadow:0 0 25px rgba(139,92,246,0.5);
+  object-fit:cover; flex-shrink:0;
+  animation:crazySpin 8s linear infinite;
+}
+@keyframes crazySpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.08); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+@media(max-width:720px){
+  .hero-content{flex-direction:column-reverse; align-items:flex-start;}
+  .crazy-avatar{width:80px; height:80px;}
+}
+
 .eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--stick); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px;}
 h1.title{font-size:38px; margin-bottom:12px; color:#FFFFFF;}
 h1.title span{color:var(--stick);}
@@ -135,10 +153,13 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 <div class="wrap">
 
 <header class="hero">
-  <div class="hero-text">
-    <div class="eyebrow">Router on a Stick · Inter-VLAN Routing</div>
-    <h1 class="title">ראוטר על <span>מקל</span></h1>
-    <p class="subtitle">איך ממשק פיזי אחד בראוטר, עם קצת עקרון של תיוג VLAN, מנתב תעבורה בין כמה רשתות וירטואליות שונות בלי לבזבז פורט לכל VLAN.</p>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="eyebrow">Router on a Stick · Inter-VLAN Routing</div>
+      <h1 class="title">ראוטר על <span>מקל</span></h1>
+      <p class="subtitle">איך ממשק פיזי אחד בראוטר, עם קצת עקרון של תיוג VLAN, מנתב תעבורה בין כמה רשתות וירטואליות שונות בלי לבזבז פורט לכל VLAN.</p>
+    </div>
+    <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר מסתובב" class="crazy-avatar">
   </div>
 </header>
 
@@ -225,14 +246,12 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <text x="135" y="32" fill="#94A3B8" font-family="Fira Code" font-size="10">802.1Q Tags Allowed</text>
   </g>
 
-
   <g transform="translate(460, 220)">
     <rect width="80" height="45" rx="6" fill="#2E374E" stroke="#3B82F6" stroke-width="3"/>
     <path d="M 15 15 L 50 15 M 50 15 L 42 10 M 50 15 L 42 20" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
     <path d="M 65 30 L 30 30 M 30 30 L 38 25 M 30 30 L 38 35" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
   </g>
   <text x="500" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">Switch_Main</text>
-
 
   <g class="pc-node" id="node10" onclick="selectNode('10')">
     <g transform="translate(215, 340)">
