@@ -116,17 +116,18 @@ button.btn.secondary{background:var(--panel3); color:var(--text); border:1px sol
 .log-line{margin-bottom:8px; animation:fadeIn .3s ease;}
 .log-line .lbl{color:var(--stick); font-weight:bold;}
 
-.terminal{background:#0F141C; border:1px solid var(--border2); border-radius:10px; padding:18px; font-family:'Fira Code',monospace; font-size:13px;}
-.term-topbar{display:flex; gap:6px; margin-bottom:12px; align-items:center;}
+/* עיצוב טרמינל מתוקן לכיווניות LTR עבור פקודות באנגלית */
+.terminal{background:#0F141C; border:1px solid var(--border2); border-radius:10px; padding:18px; font-family:'Fira Code',monospace; font-size:13px; direction:ltr; text-align:left;}
+.term-topbar{display:flex; gap:6px; margin-bottom:12px; align-items:center; direction:ltr;}
 .dot{width:10px; height:10px; border-radius:50%;}
 .dot.r{background:#EF4444;} .dot.y{background:#F59E0B;} .dot.g{background:#10B981;}
-.term-output{white-space:pre-wrap; color:#94A3B8; margin-bottom:10px; min-height:40px;}
-.term-output .ok{color:#10B981;}
-.term-output .bad{color:#EF4444;}
-.term-output .hint{color:#F59E0B;}
-.term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:12px;}
+.term-output{white-space:pre-wrap; color:#94A3B8; margin-bottom:10px; min-height:40px; direction:ltr; text-align:left;}
+.term-output .ok{color:#10B981; display:block; direction:rtl; text-align:right;}
+.term-output .bad{color:#EF4444; display:block; direction:rtl; text-align:right;}
+.term-output .hint{color:#F59E0B; display:block; direction:rtl; text-align:right;}
+.term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:12px; direction:ltr;}
 .prompt{color:#10B981; white-space:nowrap;}
-input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none;}
+input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none; direction:ltr; text-align:left;}
 
 .task-box{background:var(--panel2); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
 .task-title{font-weight:600; margin-bottom:4px; color:var(--v10);}
@@ -363,14 +364,17 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 </div>
 
 <div class="terminal">
-  <div class="term-topbar"><div class="dot r"></div><div class="dot y"></div><div class="dot g"></div><span style="margin-right:8px; color:var(--muted2); font-size:12px;">Router_Core-CLI</span></div>
-  <div class="term-output" id="termOutput">Router> enable
+  <div class="term-topbar">
+    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+    <span style="margin-left:8px; color:var(--muted2); font-size:12px;">Router_Core-CLI</span>
+  </div>
+  <div class="term-output" id="termOutput">Router&gt; enable
 Router# configure terminal
 Router(config)# interface g0/0.20
 <span class="hint">הקלד את פקודת ה-encapsulation המתאימה עבור vlan 20 ולחץ Enter</span></div>
   <div class="term-input-row">
     <span class="prompt" id="termPrompt">Router(config-subif)#</span>
-    <input type="text" class="term-input" id="termInput" placeholder="הקלד פקודת קונפיגורציה..." onkeydown="if(event.key==='Enter')submitCmd()">
+    <input type="text" class="term-input" id="termInput" placeholder="Enter configuration command..." onkeydown="if(event.key==='Enter')submitCmd()">
   </div>
 </div>
 </section>
