@@ -56,6 +56,17 @@ header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
   50% { transform: rotate(180deg) scale(1.08); }
   100% { transform: rotate(360deg) scale(1); }
 }
+
+/* אוואטר מטורלל פנימי לדיאגרמה בסיבוב של 12 שניות */
+.diagram-crazy-avatar {
+  transform-origin: 35px 35px;
+  animation: diagramCrazySpin 12s linear infinite;
+}
+@keyframes diagramCrazySpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 @media(max-width:720px){
   .hero-content{flex-direction:column-reverse; align-items:flex-start;}
   .crazy-avatar{width:80px; height:80px;}
@@ -210,10 +221,10 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   <div class="section-num">03 — תרגול חשיבה: הדמיית רשת</div>
   <h2 class="section-title">שלח חבילה ותעקוב אחרי המסלול שלה</h2>
 </div>
-<p>בחר מחשב מקור ומחשב יעד ב-VLAN שונה, ולחץ "שלח חבילה" כדי לראות בדיוק מה קורה בכל שלב — כולל תיוג, decapsulation וניתוב ברמת האייקונים.</p>
+<p>בחר מחשב מקור ומחשב יעד ב-VLAN שונה, ולחץ "שלח חבילה" כדי לראות בדיוק מה קורה בכל שלב — כולל כתובות MAC, IP ותג 802.1Q במעבר דרך הראוטר.</p>
 
 <div class="diagram-wrap">
-<svg id="netDiagram" viewBox="0 0 1000 550" style="width:100%; display:block;">
+<svg id="netDiagram" viewBox="0 0 1000 580" style="width:100%; display:block;">
   
   <line x1="250" y1="420" x2="500" y2="280" stroke="#4A597A" stroke-width="2" stroke-dasharray="4 4"/>
   <line x1="500" y1="420" x2="500" y2="280" stroke="#4A597A" stroke-width="2" stroke-dasharray="4 4"/>
@@ -224,6 +235,16 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   <text x="515" y="210" fill="#94A3B8" font-family="Fira Code" font-size="12" font-weight="500">Fa0/24</text>
   <text x="515" y="125" fill="#94A3B8" font-family="Fira Code" font-size="12" font-weight="500">Gi0/0</text>
 
+  <!-- אוואטר מטורלל פנימי קטן בדיאגרמה שמסתובב ב-12 שניות -->
+  <g transform="translate(370, 15)">
+    <foreignObject width="70" height="70">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="width:70px; height:70px;">
+        <img src="https://lh3.googleusercontent.com/d/1t9QaPCKLvtAhWncetA83ALY8EIvpnFte" alt="Crazy Avatar" class="diagram-crazy-avatar" style="width:70px; height:70px; border-radius:50%; border:2px solid #8B5CF6; box-shadow:0 0 15px rgba(139,92,246,0.6); object-fit:cover;">
+      </div>
+    </foreignObject>
+  </g>
+
+  <!-- ראוטר -->
   <g transform="translate(460, 30)">
     <circle cx="40" cy="40" r="38" fill="#2E374E" stroke="#8B5CF6" stroke-width="3"/>
     <path d="M 15 40 L 65 40 M 65 40 L 55 33 M 65 40 L 55 47" stroke="#8B5CF6" stroke-width="3" fill="none"/>
@@ -246,6 +267,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <text x="135" y="32" fill="#94A3B8" font-family="Fira Code" font-size="10">802.1Q Tags Allowed</text>
   </g>
 
+  <!-- סוויטש -->
   <g transform="translate(460, 220)">
     <rect width="80" height="45" rx="6" fill="#2E374E" stroke="#3B82F6" stroke-width="3"/>
     <path d="M 15 15 L 50 15 M 50 15 L 42 10 M 50 15 L 42 20" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
@@ -253,6 +275,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   </g>
   <text x="500" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">Switch_Main</text>
 
+  <!-- מחשבים -->
   <g class="pc-node" id="node10" onclick="selectNode('10')">
     <g transform="translate(215, 340)">
       <rect x="5" y="5" width="50" height="35" rx="4" fill="#2E374E" stroke="#F59E0B" stroke-width="2.5"/>
@@ -262,8 +285,8 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <g transform="translate(150, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#F59E0B" stroke-width="2"/>
       <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 10 · מורים</text>
-      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.10.10.50</text>
-      <text x="100" y="66" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="11">GW: 10.10.10.1</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.10.10.50</text>
+      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: AA:AA:AA:10:10:50</text>
     </g>
   </g>
 
@@ -276,8 +299,8 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <g transform="translate(400, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#EF4444" stroke-width="2"/>
       <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 20 · עיצוב</text>
-      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.20.20.50</text>
-      <text x="100" y="66" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="11">GW: 10.20.20.1</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.20.20.50</text>
+      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: BB:BB:BB:20:20:50</text>
     </g>
   </g>
 
@@ -290,14 +313,27 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <g transform="translate(650, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#10B981" stroke-width="2"/>
       <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 30 · רשתות</text>
-      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="12">IP: 10.30.30.50</text>
-      <text x="100" y="66" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="11">GW: 10.30.30.1</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.30.30.50</text>
+      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: CC:CC:CC:30:30:50</text>
     </g>
   </g>
 
+  <!-- מעטפת החבילה המעוצבת המורחבת (envelope packet) -->
   <g id="movingPacket" style="display:none;">
-    <rect x="-25" y="-14" width="50" height="28" rx="6" fill="#8B5CF6" stroke="#FFFFFF" stroke-width="1.5"/>
-    <text id="movingPacketLabel" x="0" y="4" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="10" font-weight="800">TAG</text>
+    <!-- גוף המעטפה -->
+    <rect x="-85" y="-38" width="170" height="76" rx="8" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="2.5" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.6))"/>
+    <!-- לשונית מעטפה בחלק העליון -->
+    <path d="M -85 -38 L 0 -10 L 85 -38" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
+    <!-- תג כותרת / Tag -->
+    <rect x="-80" y="-32" width="160" height="16" rx="4" id="pktHeaderBg" fill="#8B5CF6"/>
+    <text id="movingPacketLabel" x="0" y="-20" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="10" font-weight="800">TAG: 10</text>
+    
+    <!-- פרטי IP -->
+    <text id="pktIpSrcDst" x="0" y="-2" text-anchor="middle" fill="#E2E8F0" font-family="Fira Code" font-size="9" font-weight="600">IP: 10.10.10.50 ➔ 10.20.20.50</text>
+
+    <!-- פרטי MAC מקור ויעד -->
+    <text id="pktMacSrc" x="0" y="14" text-anchor="middle" fill="#38BDF8" font-family="Fira Code" font-size="8">SrcMAC: AA:AA:AA:10:10:50</text>
+    <text id="pktMacDst" x="0" y="28" text-anchor="middle" fill="#F43F5E" font-family="Fira Code" font-size="8">DstMAC: C1:SC:00:00:00:01</text>
   </g>
 </svg>
 
@@ -430,8 +466,15 @@ function toggleAcc(id){
   document.getElementById(id).classList.toggle("open");
 }
 
-// לוגיקת סימולציה משופרת
+// נתוני הבלוקים והרשת
 const vlanColors = {10:"#F59E0B", 20:"#EF4444", 30:"#10B981"};
+const pcData = {
+  10: { ip: "10.10.10.50", mac: "AA:AA:AA:10:10:50" },
+  20: { ip: "10.20.20.50", mac: "BB:BB:BB:20:20:50" },
+  30: { ip: "10.30.30.50", mac: "CC:CC:CC:30:30:50" }
+};
+const routerMac = "C1:SC:00:00:00:01"; // כתובת ה-MAC של ממשק הראוטר
+
 const coords = {
   pc10: {x:250, y:410},
   pc20: {x:500, y:410},
@@ -480,15 +523,24 @@ function resetSim(){
   document.getElementById("movingPacket").style.display = "none";
 }
 
-async function animatePacket(x1, y1, x2, y2, color, label, duration) {
+// הנפשה איטית, ברורה ומפורטת עבור המעטפה
+async function animatePacketDetails(x1, y1, x2, y2, tagLabel, tagColor, srcIp, dstIp, srcMac, dstMac, duration) {
   const pkt = document.getElementById("movingPacket");
-  const rect = pkt.querySelector("rect");
-  const txt = document.getElementById("movingPacketLabel");
-  rect.setAttribute("fill", color);
-  txt.textContent = label;
+  const headerBg = document.getElementById("pktHeaderBg");
+  const tagTxt = document.getElementById("movingPacketLabel");
+  const ipTxt = document.getElementById("pktIpSrcDst");
+  const macSrcTxt = document.getElementById("pktMacSrc");
+  const macDstTxt = document.getElementById("pktMacDst");
+
+  headerBg.setAttribute("fill", tagColor);
+  tagTxt.textContent = tagLabel;
+  ipTxt.textContent = `IP: ${srcIp} ➔ ${dstIp}`;
+  macSrcTxt.textContent = `SrcMAC: ${srcMac}`;
+  macDstTxt.textContent = `DstMAC: ${dstMac}`;
+
   pkt.style.display = "block";
   
-  const steps = 40;
+  const steps = 60; // יותר צעדים לתנועה חלקה ואיטית
   for(let i=0; i<=steps; i++) {
     const t = i / steps;
     const currentX = x1 + (x2 - x1) * t;
@@ -504,30 +556,60 @@ async function sendPacket() {
   
   const s = selSrc;
   const d = selDst;
+  const srcPC = pcData[s];
+  const dstPC = pcData[d];
   
-  // 1. מחשב לסוויטש
-  log("<span class='lbl'>[שלב 1]</span> המחשב ב-VLAN " + s + " שולח את המסגרת (Frame) לכיוון הסוויטש. הקישור הוא Access ולכן החבילה יוצאת <b>ללא תיוג</b>.");
-  await animatePacket(coords["pc"+s].x, coords["pc"+s].y, coords.switch.x, coords.switch.y, vlanColors[s], "DATA", 800);
+  // 1. מחשב לסוויטש (הלוך - ללא תיוג עדיין)
+  log(`<span class='lbl'>[שלב 1]</span> המחשב ב-VLAN ${s} יוצר חבילה. IP מקור: <b>${srcPC.ip}</b> | IP יעד: <b>${dstPC.ip}</b>.<br>בשכבה 2: Src MAC הוא של המחשב, ו-Dst MAC הוא של ה-Gateway (הראוטר). הקישור הוא Access ולכן החבילה יוצאת <b>ללא תיוג 802.1Q</b>.`);
+  await animatePacketDetails(
+    coords["pc"+s].x, coords["pc"+s].y, 
+    coords.switch.x, coords.switch.y, 
+    "UNTAGGED (ACCESS)", "#64748B", 
+    srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 
+    1800
+  );
+  await new Promise(r => setTimeout(r, 600));
+
+  // 2. סוויטש לראוטר (הלוך - הוספת תג VLAN מקור)
+  log(`<span class='lbl'>[שלב 2]</span> הסוויטש מקבל את הפריים בפורט Access של VLAN ${s}. בהעברה ב-Trunk הוא <b>מוסיף תג 802.1Q Tag: ${s}</b> בכותרת הפריים.`);
+  await animatePacketDetails(
+    coords.switch.x, coords.switch.y, 
+    coords.router.x, coords.router.y, 
+    `TAG: VLAN ${s}`, vlanColors[s], 
+    srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 
+    2000
+  );
+  await new Promise(r => setTimeout(r, 800));
+
+  // 3. עיבוד בראוטר + שינוי MAC
+  log(`<span class='lbl'>[שלב 3]</span> הראוטר מקבל את החבילה בממשק המשנה <span style='color:${vlanColors[s]}'>g0/0.${s}</span>, מסיר את התג (Decapsulation) ובודק את טבלת הניתוב לפי IP היעד.`);
+  await new Promise(r => setTimeout(r, 1500));
   
-  // 2. סוויטש לראוטר
-  log("<span class='lbl'>[שלב 2]</span> הסוויטש מקבל את הפריים, מזהה שפורט הכניסה שייך ל-VLAN " + s + ", ומתייג את הפריים עם מזהה <b>802.1Q Tag: " + s + "</b> לפני העברתו ב-Trunk.");
-  await animatePacket(coords.switch.x, coords.switch.y, coords.router.x, coords.router.y, "#8B5CF6", "TAG: " + s, 900);
-  
-  // 3. עיבוד בראוטר
-  log("<span class='lbl'>[שלב 3]</span> הראוטר מקבל את החבילה בממשק המשנה <span style='color:"+vlanColors[s]+"'>g0/0." + s + "</span>, מבצע Decapsulation (הסרת התג) ובודק את טבלת הניתוב שלו.");
-  await new Promise(r => setTimeout(r, 1200));
-  
-  log("<span class='lbl'>[שלב 4]</span> הראוטר רואה שרשת היעד מחוברת ישירות לממשק המשנה שלו <span style='color:"+vlanColors[d]+"'>g0/0." + d + "</span>. הוא אורז את החבילה מחדש עם <b>תג היעד החדש: " + d + "</b>.");
-  
-  // 4. ראוטר חזרה לסוויטש
-  log("<span class='lbl'>[שלב 5]</span> החבילה נשלחת בחזרה <b>על אותו כבל פיזי (המקל)</b> עם התג החדש.");
-  await animatePacket(coords.router.x, coords.router.y, coords.switch.x, coords.switch.y, "#8B5CF6", "TAG: " + d, 900);
-  
-  // 5. סוויטש למחשב היעד
-  log("<span class='lbl'>[שלב 6]</span> הסוויטש מקבל את הפריים המתויג, מסיר את תג ה-VLAN ומעביר פריים נקי למחשב היעד ב-VLAN " + d + ".");
-  await animatePacket(coords.switch.x, coords.switch.y, coords["pc"+d].x, coords["pc"+d].y, vlanColors[d], "DATA", 800);
-  
-  log("<span class='lbl'>✅ הצלחה!</span> החבילה הגיעה ליעדה בשלום. שים לב כיצד ממשק פיזי יחיד של הראוטר שימש לשני כיווני התנועה בו-זמנית.");
+  log(`<span class='lbl'>[שלב 4 - שינוי MAC והחלפת תג!]</span> הראוטר מנתב את החבילה לממשק <span style='color:${vlanColors[d]}'>g0/0.${d}</span>.<br><b>שינוי קריטי בשכבה 2:</b> ה-Src MAC הופך ל-MAC של הראוטר, ו-Dst MAC הופך ל-MAC של מחשב היעד (<b>${dstPC.mac}</b>)! בנוסף, מוצמד תג חדש: <b>802.1Q Tag: ${d}</b>.`);
+  await new Promise(r => setTimeout(r, 1800));
+
+  // 4. ראוטר חזרה לסוויטש (חזור - תג VLAN יעד + MAC מעודכן)
+  log(`<span class='lbl'>[שלב 5]</span> החבילה נשלחת בחזרה <b>על אותו כבל פיזי (המקל)</b> עם כתובות ה-MAC החדשות ותג VLAN ${d}.`);
+  await animatePacketDetails(
+    coords.router.x, coords.router.y, 
+    coords.switch.x, coords.switch.y, 
+    `TAG: VLAN ${d}`, vlanColors[d], 
+    srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 
+    2000
+  );
+  await new Promise(r => setTimeout(r, 600));
+
+  // 5. סוויטש למחשב היעד (חזור - הסרת תג בפורט Access)
+  log(`<span class='lbl'>[שלב 6]</span> הסוויטש מקבל את הפריים המתויג ב-Trunk, מסיר את התג ומעביר פריים נקי לפורט ה-Access של מחשב היעד ב-VLAN ${d}.`);
+  await animatePacketDetails(
+    coords.switch.x, coords.switch.y, 
+    coords["pc"+d].x, coords["pc"+d].y, 
+    "UNTAGGED (ACCESS)", "#64748B", 
+    srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 
+    1800
+  );
+
+  log("<span class='lbl'>✅ הניתוב הושלם בהצלחה!</span> שים לב כיצד כתובות ה-IP נשארו קבועות לאורך כל הדרך, בעוד כתובות ה-MAC והתיוג התעדכנו במעבר בראוטר וב-Trunk.");
   document.getElementById("movingPacket").style.display = "none";
   document.getElementById("sendBtn").disabled = false;
 }
@@ -628,7 +710,6 @@ renderQuiz();
 
 // סקריפט להפעלת חלונית העזרה
 document.addEventListener('DOMContentLoaded', function() {
-    // טעינת אייקונים מבית Lucide
     if (window.lucide) {
         lucide.createIcons();
     }
