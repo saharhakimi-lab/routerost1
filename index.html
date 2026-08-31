@@ -6,26 +6,26 @@
 <title>ראוטר על מקל | סימולטור לימוד משופר</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 <!-- Tailwind CSS & Lucide Icons CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root{
-  --bg:#1A1F2C; --panel:#242B3D; --panel2:#2E374E; --panel3:#3A4663;
-  --border:#343E56; --border2:#4A597A;
-  --text:#E2E8F0; --muted:#94A3B8; --muted2:#64748B;
-  --v10:#F59E0B; --v10-dim:rgba(245,158,11,0.15);
-  --v20:#EF4444; --v20-dim:rgba(239,68,68,0.15);
-  --v30:#10B981; --v30-dim:rgba(16,185,129,0.15);
-  --stick:#8B5CF6;
-  --ok:#10B981; --bad:#EF4444; --info:#3B82F6;
+  --bg:#FAF6EE; --panel:#FFFDF9; --panel2:#F4EFE6; --panel3:#EAE3D2;
+  --border:#E2D9C8; --border2:#CBD5E1;
+  --text:#2D3748; --muted:#5A6A85; --muted2:#718096;
+  --v10:#D97706; --v10-dim:rgba(217,119,6,0.15);
+  --v20:#DC2626; --v20-dim:rgba(220,38,38,0.15);
+  --v30:#059669; --v30-dim:rgba(5,150,105,0.15);
+  --stick:#7C3AED;
+  --ok:#059669; --bad:#DC2626; --info:#2563EB;
   --radius:14px;
 }
 *{box-sizing:border-box;}
 body{
   margin:0; background:var(--bg); color:var(--text);
-  font-family:'Rubik',sans-serif; line-height:1.6;
+  font-family:'Varela Round', sans-serif; line-height:1.6;
   padding-bottom:140px;
 }
 
@@ -51,9 +51,9 @@ body{
 h1,h2,h3{font-weight:700; margin:0 0 8px;}
 p{margin:0 0 12px; color:var(--muted);}
 
-.progressbar{position:sticky; top:0; z-index:40; background:rgba(26,31,44,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
+.progressbar{position:sticky; top:0; z-index:40; background:rgba(250,246,238,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
 .progressbar-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:14px;}
-.progressbar-title{font-weight:700; font-size:15px; white-space:nowrap;}
+.progressbar-title{font-weight:700; font-size:15px; white-space:nowrap; color:var(--text);}
 .steps{display:flex; gap:6px; flex:1;}
 .step{flex:1; height:6px; border-radius:4px; background:var(--panel3); position:relative; overflow:hidden;}
 .step.done{background:var(--ok);}
@@ -65,7 +65,7 @@ header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
 .crazy-avatar{
   width:110px; height:110px; border-radius:50%;
   border:3px solid var(--stick);
-  box-shadow:0 0 25px rgba(139,92,246,0.5);
+  box-shadow:0 0 25px rgba(124,58,237,0.3);
   object-fit:cover; flex-shrink:0;
   animation:crazySpin 8s linear infinite;
 }
@@ -89,17 +89,17 @@ header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
   .crazy-avatar{width:80px; height:80px;}
 }
 
-.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--stick); background:rgba(139,92,246,0.15); border:1px solid rgba(139,92,246,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px; direction:ltr;}
-h1.title{font-size:38px; margin-bottom:12px; color:#FFFFFF;}
+.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--stick); background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px; direction:ltr;}
+h1.title{font-size:38px; margin-bottom:12px; color:var(--text);}
 h1.title b{color:var(--stick); font-weight: inherit;}
 .subtitle{font-size:16px; max-width:700px; margin:0;}
 
 section{padding:50px 0; border-top:1px solid var(--border);}
 .section-head{margin-bottom:26px;}
 .section-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:13px; margin-bottom:6px; direction:ltr; text-align:right;}
-.section-title{font-size:24px; color:#FFFFFF;}
+.section-title{font-size:24px; color:var(--text);}
 
-.card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px;}
+.card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; box-shadow:0 2px 8px rgba(0,0,0,0.03);}
 .grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
 @media(max-width:720px){.grid2{grid-template-columns:1fr;}}
 
@@ -110,7 +110,7 @@ section{padding:50px 0; border-top:1px solid var(--border);}
 .tag.v20{background:var(--v20-dim); color:var(--v20);}
 .tag.v30{background:var(--v30-dim); color:var(--v30);}
 
-.accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px;}
+.accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px; background:var(--panel);}
 .acc-head{padding:16px 18px; background:var(--panel); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
 .acc-head:hover{background:var(--panel2);}
 .acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; background:var(--panel);}
@@ -123,7 +123,7 @@ section{padding:50px 0; border-top:1px solid var(--border);}
 .pc-node{cursor:pointer; transition:transform 0.2s, opacity 0.15s;}
 .pc-node:hover{opacity:0.9; transform:scale(1.02);}
 .controls-row{display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:20px;}
-button.btn{background:var(--stick); color:#FFFFFF; border:none; border-radius:8px; padding:12px 22px; font-family:'Rubik'; font-weight:600; font-size:15px; cursor:pointer; transition:transform .1s, opacity .15s;}
+button.btn{background:var(--stick); color:#FFFFFF; border:none; border-radius:8px; padding:12px 22px; font-family:'Varela Round', sans-serif; font-weight:600; font-size:15px; cursor:pointer; transition:transform .1s, opacity .15s;}
 button.btn:hover{opacity:0.9;}
 button.btn:active{transform:scale(0.97);}
 button.btn:disabled{opacity:0.3; cursor:not-allowed;}
@@ -147,17 +147,17 @@ button.btn.teacher{background: linear-gradient(135deg, #10B981 0%, #059669 100%)
 .prompt{color:#10B981; white-space:nowrap;}
 input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none; direction:ltr; text-align:left;}
 
-.task-box{background:var(--panel2); border:1px solid var(--border2); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
+.task-box{background:var(--panel2); border:1px solid var(--border); border-radius:10px; padding:14px 16px; margin-bottom:14px;}
 .task-title{font-weight:600; margin-bottom:4px; color:var(--v10);}
 .task-progress{font-family:'Fira Code',monospace; font-size:12px; color:var(--muted);}
 
-.quiz-q{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px;}
+.quiz-q{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; margin-bottom:20px; box-shadow:0 2px 8px rgba(0,0,0,0.03);}
 .quiz-q-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:12px; margin-bottom:6px; direction:ltr; text-align:right;}
 .quiz-opts{display:flex; flex-direction:column; gap:10px; margin-top:14px;}
-.quiz-opt{background:var(--panel3); border:1px solid var(--border2); border-radius:8px; padding:14px; cursor:pointer; text-align:right; font-size:14px; transition:border-color 0.15s;}
-.quiz-opt:hover{border-color:var(--muted);}
-.quiz-opt.correct{background:rgba(16,185,129,0.15); border-color:var(--ok); color:var(--ok);}
-.quiz-opt.wrong{background:rgba(239,68,68,0.15); border-color:var(--bad); color:var(--bad);}
+.quiz-opt{background:var(--panel2); border:1px solid var(--border); border-radius:8px; padding:14px; cursor:pointer; text-align:right; font-size:14px; transition:border-color 0.15s, background 0.15s;}
+.quiz-opt:hover{border-color:var(--muted); background:var(--panel3);}
+.quiz-opt.correct{background:rgba(5,150,105,0.15); border-color:var(--ok); color:var(--ok);}
+.quiz-opt.wrong{background:rgba(220,38,38,0.15); border-color:var(--bad); color:var(--bad);}
 .quiz-opt.disabled{pointer-events:none;}
 .quiz-explain{margin-top:12px; padding:12px; background:var(--panel2); border-radius:8px; font-size:13px; display:none;}
 .quiz-explain.show{display:block;}
@@ -230,7 +230,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 <div id="acc2" class="accordion">
   <div class="acc-head" onclick="toggleAcc('acc2')"><div>מהו <code class="term-code-inline">Subinterface</code>?</div><div class="acc-arrow">▾</div></div>
   <div class="acc-body"><div class="acc-body-inner">
-    <p>ממשק וירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ה-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> המקביל.</p>
+    <p>ממשק וירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ה-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> المקביל.</p>
   </div></div>
 </div>
 </section>
@@ -273,7 +273,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   
   <g transform="translate(560, 25)">
     <rect width="180" height="85" rx="8" fill="#1E2330" stroke="#4A597A" stroke-width="1.5"/>
-    <text x="135" y="22" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">Router_Core</text>
+    <text x="135" y="22" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">Router_Core</text>
     <text x="135" y="42" fill="#F59E0B" font-family="Fira Code" font-size="11">g0/0.10 (10.10.10.1)</text>
     <text x="135" y="59" fill="#EF4444" font-family="Fira Code" font-size="11">g0/0.20 (10.20.20.1)</text>
     <text x="135" y="76" fill="#10B981" font-family="Fira Code" font-size="11">g0/0.30 (10.30.30.1)</text>
@@ -281,7 +281,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 
   <g transform="translate(560, 145)">
     <rect width="160" height="40" rx="6" fill="rgba(139, 92, 246, 0.1)" stroke="rgba(139, 92, 246, 0.4)" stroke-width="1"/>
-    <text x="135" y="18" fill="#C084FC" font-family="Rubik" font-size="12" font-weight="600">Trunk Link (Stick)</text>
+    <text x="135" y="18" fill="#C084FC" font-family="Varela Round" font-size="12" font-weight="600">Trunk Link (Stick)</text>
     <text x="135" y="32" fill="#94A3B8" font-family="Fira Code" font-size="10">802.1Q Tags Allowed</text>
   </g>
 
@@ -291,7 +291,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <path d="M 15 15 L 50 15 M 50 15 L 42 10 M 50 15 L 42 20" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
     <path d="M 65 30 L 30 30 M 30 30 L 38 25 M 30 30 L 38 35" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
   </g>
-  <text x="500" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="14" font-weight="700">Switch_Main</text>
+  <text x="500" y="285" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="14" font-weight="700">Switch_Main</text>
 
   <!-- מחשבים -->
   <g class="pc-node" id="node10" onclick="selectNode('10')">
@@ -302,7 +302,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     </g>
     <g transform="translate(150, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#F59E0B" stroke-width="2"/>
-      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 10 · מורים</text>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 10 · מורים</text>
       <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.10.10.50</text>
       <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: AA:AA:AA:10:10:50</text>
     </g>
@@ -316,7 +316,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     </g>
     <g transform="translate(400, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#EF4444" stroke-width="2"/>
-      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 20 · עיצוב</text>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 20 · עיצוב</text>
       <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.20.20.50</text>
       <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: BB:BB:BB:20:20:50</text>
     </g>
@@ -330,7 +330,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     </g>
     <g transform="translate(650, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#10B981" stroke-width="2"/>
-      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Rubik" font-size="13" font-weight="700">VLAN 30 · רשתות</text>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 30 · רשתות</text>
       <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.30.30.50</text>
       <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: CC:CC:CC:30:30:50</text>
     </g>
@@ -717,7 +717,7 @@ const quizData = [
     explain: "בציוד Cisco חובה להגדיר קודם את ה-encapsulation כדי שממשק המשנה ידע לאיזה פרוטוקול ותג לייחס את ה-IP."
   },
   {
-    q: "כיצד סוויטש מתמודד עם Frame המגיע מפורט Access של VLAN 10 כאשר הוא מנתב אותו לפורט Trunk?",
+    q: "כיצד סוויטש מתמודד עם Frame المגיע מפורט Access של VLAN 10 כאשר הוא מנתב אותו לפורט Trunk?",
     opts: ["הוא שולח אותו ללא תג בכלל", "הוא מוסיף תג 802.1Q עם מזהה VLAN 10 ושולח ב-Trunk", "הוא משנה את כתובת ה-IP של המקור", "הוא משמיד את ה-Frame"],
     correct: 1,
     explain: "פורט Access משויך ל-VLAN ספציפי. במעבר ל-Trunk, המתג מוסיף את תג ה-802.1Q המתאים."
