@@ -36,13 +36,14 @@ body{
   unicode-bidi: embed;
 }
 .term-code-inline {
-  background: #0D1117;
-  border: 1px solid var(--border2);
-  padding: 2px 6px;
-  border-radius: 4px;
-  color: #38BDF8;
-  font-size: 0.9em;
+  background: #EFECE6;
+  border: 1px solid #D4CEC0;
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: #1E293B;
+  font-size: 0.88em;
   font-family: 'Fira Code', monospace;
+  font-weight: 600;
   direction: ltr;
   display: inline-block;
 }
@@ -230,7 +231,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 <div id="acc2" class="accordion">
   <div class="acc-head" onclick="toggleAcc('acc2')"><div>מהו <code class="term-code-inline">Subinterface</code>?</div><div class="acc-arrow">▾</div></div>
   <div class="acc-body"><div class="acc-body-inner">
-    <p>ממשק וירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ה-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> المקביל.</p>
+    <p>ממשק וירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ה-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> המקביל.</p>
   </div></div>
 </div>
 </section>
@@ -717,7 +718,7 @@ const quizData = [
     explain: "בציוד Cisco חובה להגדיר קודם את ה-encapsulation כדי שממשק המשנה ידע לאיזה פרוטוקול ותג לייחס את ה-IP."
   },
   {
-    q: "כיצד סוויטש מתמודד עם Frame المגיע מפורט Access של VLAN 10 כאשר הוא מנתב אותו לפורט Trunk?",
+    q: "כיצד סוויטש מתמודד עם Frame המגיע מפורט Access של VLAN 10 כאשר הוא מנתב אותו לפורט Trunk?",
     opts: ["הוא שולח אותו ללא תג בכלל", "הוא מוסיף תג 802.1Q עם מזהה VLAN 10 ושולח ב-Trunk", "הוא משנה את כתובת ה-IP של המקור", "הוא משמיד את ה-Frame"],
     correct: 1,
     explain: "פורט Access משויך ל-VLAN ספציפי. במעבר ל-Trunk, המתג מוסיף את תג ה-802.1Q המתאים."
