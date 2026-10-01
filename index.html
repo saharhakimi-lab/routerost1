@@ -61,14 +61,42 @@ p{margin:0 0 12px; color:var(--muted);}
 .step.active{background:var(--info);}
 .progress-pct{font-size:13px; color:var(--muted); font-family:'Fira Code',monospace; white-space:nowrap;}
 
-header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
-.hero-content{display:flex; align-items:center; justify-content:space-between; gap:24px;}
+/* ============ HEADER (קומפקטי, רציף ומסודר בלי רווחים מיותרים) ============ */
+header.hero{
+  padding: 10px 0 12px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  background: #FAF6EE;
+}
+
+.header-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.header-main-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
 .crazy-avatar{
-  width:110px; height:110px; border-radius:50%;
-  border:3px solid var(--stick);
-  box-shadow:0 0 25px rgba(124,58,237,0.3);
-  object-fit:cover; flex-shrink:0;
-  animation:crazySpin 8s linear infinite;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid var(--stick);
+  box-shadow: 0 0 12px rgba(124,58,237,0.4);
+  object-fit: cover;
+  flex-shrink: 0;
+  animation: crazySpin 8s linear infinite;
 }
 @keyframes crazySpin {
   0% { transform: rotate(0deg) scale(1); }
@@ -85,15 +113,78 @@ header.hero{padding:60px 0 30px; border-bottom:1px solid var(--border);}
   100% { transform: rotate(360deg); }
 }
 
-@media(max-width:720px){
-  .hero-content{flex-direction:column-reverse; align-items:flex-start;}
-  .crazy-avatar{width:80px; height:80px;}
+.header-text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:12px; letter-spacing:1px; color:var(--stick); background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.3); padding:5px 14px; border-radius:20px; margin-bottom:18px; direction:ltr;}
-h1.title{font-size:38px; margin-bottom:12px; color:var(--text);}
+.eyebrow{display:inline-block; font-family:'Fira Code',monospace; font-size:10.5px; letter-spacing:1px; color:var(--stick); background:rgba(124,58,237,0.12); border:1px solid rgba(124,58,237,0.3); padding:2px 8px; border-radius:12px; direction:ltr; width: fit-content; unicode-bidi: isolate;}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+h1.title{font-size:22px; margin:0; color:var(--text); line-height: 1.1;}
 h1.title b{color:var(--stick); font-weight: inherit;}
-.subtitle{font-size:16px; max-width:700px; margin:0;}
+.subtitle{font-size:12px; max-width:700px; margin:0; color:var(--muted);}
+
+.header-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.protocol-row {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.protocol-chip {
+  font-family: 'Fira Code', monospace;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--stick);
+  background: rgba(124,58,237,0.1);
+  border: 1px solid rgba(124,58,237,0.25);
+  padding: 2px 6px;
+  border-radius: 5px;
+  letter-spacing: 0.3px;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-btn {
+  font-family: 'Fira Code', monospace;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  transition: transform 0.18s ease, opacity 0.18s ease;
+  letter-spacing: 0.2px;
+}
+
+.nav-btn:hover { transform: translateY(-1px); }
+.nav-btn.solid { background: var(--stick); color: #fff; border-color: transparent; }
 
 section{padding:50px 0; border-top:1px solid var(--border);}
 .section-head{margin-bottom:26px;}
@@ -184,13 +275,32 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 <div class="wrap">
 
 <header class="hero">
-  <div class="hero-content">
-    <div class="hero-text">
-      <div class="eyebrow">Router on a Stick · Inter-VLAN Routing</div>
-      <h1 class="title">ראוטר על <b>מקל</b></h1>
-      <p class="subtitle">איך ממשק פיזי אחד בראוטר, עם עקרון תיוג <code class="term-code-inline">VLAN</code>, מנתב תעבורה בין כמה רשתות וירטואליות שונות בלי לבזבז פורט פיזי לכל <code class="term-code-inline">VLAN</code>.</p>
+  <div class="header-inner">
+    <!-- קבוצה ימנית: אוואטר, תג, כותרת וסאבטייטל -->
+    <div class="header-main-group">
+      <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר מסתובב" class="crazy-avatar">
+      <div class="header-text-content">
+        <div class="eyebrow">Router on a Stick · Inter-VLAN Routing</div>
+        <div class="title-row">
+          <h1 class="title">ראוטר על <b>מקל</b></h1>
+        </div>
+        <p class="subtitle">איך ממשק פיזי אחד בראוטר מנתב תעבורה בין כמה רשתות וירטואליות.</p>
+      </div>
     </div>
-    <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר מסתובב" class="crazy-avatar">
+
+    <!-- קבוצה שמאלית: פרוטוקולים וכפתורי ניווט בשורה אחת צפופה -->
+    <div class="header-actions-group">
+      <div class="protocol-row">
+        <span class="protocol-chip">VLAN</span>
+        <span class="protocol-chip">TRUNK</span>
+        <span class="protocol-chip">802.1Q</span>
+        <span class="protocol-chip">ROUTER</span>
+      </div>
+      <nav class="navbar">
+        <a class="nav-btn" href="#s3">מעבדה</a>
+        <a class="nav-btn solid" href="https://gemini.google.com/gem/167016ac4a4b/66c3b83daa7940ef?usp=sharing" target="_blank" rel="noopener">Gemini AI</a>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -209,7 +319,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   </div>
   <div class="card solution-card">
     <h3>✅ הפתרון: ראוטר על מקל</h3>
-    <p>במקום כבל לכל <code class="term-code-inline">VLAN</code> — כבל <b>אחד</b> <code class="term-code-inline">Trunk Link</code> בין המתג לראוטר, שמעביר את כל ה-<code class="term-code-inline">VLAN-ים</code> יחד, כל אחד עם תג <code class="term-code-inline">802.1Q</code> משלו.</p>
+    <p>במקום כבל לכל <code class="term-code-inline">VLAN</code> — כבל <b>אחד</b> <code class="term-code-inline">Trunk Link</code> בין המתג לראוטר, שמעביר את כל ال-<code class="term-code-inline">VLAN-ים</code> יחד, כל אחד עם תג <code class="term-code-inline">802.1Q</code> משלו.</p>
     <p>בראוטר יוצרים ממשקי-משנה <code class="term-code-inline">subinterfaces</code> וירטואליים על גבי אותו פורט פיזי — למשל <code class="term-code-inline">g0/0.10</code>, <code class="term-code-inline">g0/0.20</code>, <code class="term-code-inline">g0/0.30</code> — כל אחד שייך ל-<code class="term-code-inline">VLAN</code> אחר.</p>
   </div>
 </div>
@@ -231,7 +341,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 <div id="acc2" class="accordion">
   <div class="acc-head" onclick="toggleAcc('acc2')"><div>מהו <code class="term-code-inline">Subinterface</code>?</div><div class="acc-arrow">▾</div></div>
   <div class="acc-body"><div class="acc-body-inner">
-    <p>ממשק וירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ה-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> המקביל.</p>
+    <p>ממשק وירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ال-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> המקביל.</p>
   </div></div>
 </div>
 </section>
@@ -241,7 +351,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   <div class="section-num">03 — תרגול חשיבה: הדמיית רשת</div>
   <h2 class="section-title">שלח חבילה ותעקוב אחרי המסלול שלה</h2>
 </div>
-<p>בחר מחשב מקור ומחשב יעד ב-<code class="term-code-inline">VLAN</code> שונה, ולחץ "שלח חבילה" כדי לראות בדיוק מה קורה בכל שלב — כולל כתובות <code class="term-code-inline">MAC</code>, <code class="term-code-inline">IP</code> ותג <code class="term-code-inline">802.1Q</code> במעבר דרך הראוטר.</p>
+<p>בחר מחשב מקור ומחשב יעד ב-<code class="term-code-inline">VLAN</code> שונה, ולחץ "שלח חבילה" כדי לראות בדיוק מה קורה בכל שלב — כולל כתובות <code class="term-code-inline">MAC</code>, <code class="term-code-inline">IP</code> ותג <code class="term-code-inline">802.1Q</code> במעבר דרך الראוטר.</p>
 
 <div class="diagram-wrap">
 <svg id="netDiagram" viewBox="0 0 1000 580" style="width:100%; display:block;">
@@ -368,7 +478,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   <div class="section-num">04 — תרגול מעשי</div>
   <h2 class="section-title">הגדר Subinterfaces כמו מהנדס רשת</h2>
 </div>
-<p>המשימה: להגדיר את ה-<code class="term-code-inline">Subinterface</code> של <code class="term-code-inline">VLAN 20</code> מגמת עיצוב על הראוטר. הקלד את הפקודות בטרמינל, שלב אחר שלב.</p>
+<p>המשימה: להגדיר את ال-<code class="term-code-inline">Subinterface</code> של <code class="term-code-inline">VLAN 20</code> מגמת עיצוב על הראוטר. הקלד את הפקודות בטרמינל, שלב אחר שלב.</p>
 
 <div class="task-box">
   <div class="task-title">משימה: g0/0.20 — VLAN 20, כתובת רשת 10.20.20.1/24</div>
@@ -529,7 +639,7 @@ function selectNode(vlan) {
     document.getElementById("selInfo").innerHTML = "נבחר מקור: <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b>. עכשיו בחר מחשב יעד (ב-VLAN שונה).";
   } else if (!selDst) {
     if (vlan === selSrc) {
-      log("⚠️ לא ניתן לבחור את אותו ה-VLAN כרשת יעד. ניתוב מתבצע רק בין רשתות שונות!");
+      log("⚠️ לא ניתן לבחור את אותו ال-VLAN כרשת יעד. ניתוב מתבצע רק בין רשתות שונות!");
       return;
     }
     selDst = vlan;
@@ -606,7 +716,7 @@ async function sendPacket() {
   const srcPC = pcData[s];
   const dstPC = pcData[d];
   
-  log(`<div class='lbl'>[שלב 1]</div> המחשב ב-VLAN ${s} יוצר חבילה. IP מקור: <b>${srcPC.ip}</b> | IP יעד: <b>${dstPC.ip}</b>.<br>בשכבה 2: Src MAC הוא של המחשב, ו-Dst MAC הוא של ה-Gateway (הראוטר). הקישור הוא Access ולכן החבילה יוצאת <b>ללא תיוג 802.1Q</b>.`);
+  log(`<div class='lbl'>[שלב 1]</div> המחשב ב-VLAN ${s} יוצר חבילה. IP מקור: <b>${srcPC.ip}</b> | IP יעד: <b>${dstPC.ip}</b>.<br>בשכבה 2: Src MAC هو של המחשב, ו-Dst MAC הוא של ה-Gateway (הראוטר). הקישור هو Access ולכן החבילה יוצאת <b>ללא תיוג 802.1Q</b>.`);
   await animatePacketDetails(coords["pc"+s].x, coords["pc"+s].y, coords.switch.x, coords.switch.y, "UNTAGGED (ACCESS)", "#64748B", srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 1800);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 600));
@@ -616,11 +726,11 @@ async function sendPacket() {
   await checkPauseState();
   await new Promise(r => setTimeout(r, 800));
 
-  log(`<div class='lbl'>[שלב 3]</div> הראוטר מקבל את החבילה בממשק המשנה <b style='color:${vlanColors[s]}'>g0/0.${s}</b>, מסיר את התג (Decapsulation) ובודק את טבלת הניתוב לפי IP היעד.`);
+  log(`<div class='lbl'>[שלב 3]</div> الראוטר מקבל את החבילה בממשק המשנה <b style='color:${vlanColors[s]}'>g0/0.${s}</b>, מסיר את התג (Decapsulation) ובודק את טבלת הניתוב לפי IP היעד.`);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 1500));
   
-  log(`<div class='lbl'>[שלב 4 - שינוי MAC והחלפת תג!]</div> הראוטר מנתב את החבילה לממשק <b style='color:${vlanColors[d]}'>g0/0.${d}</b>.<br><b>שינוי קריטי בשכבה 2:</b> ה-Src MAC הופך ל-MAC של הראוטר, ו-Dst MAC הופך ל-MAC של מחשב היעד (<b>${dstPC.mac}</b>)! בנוסף, מוצמד תג חדש: <b>802.1Q Tag: ${d}</b>.`);
+  log(`<div class='lbl'>[שלב 4 - שינוי MAC והחלפת תג!]</div> הראוטר מנתב את החבילה לממשק <b style='color:${vlanColors[d]}'>g0/0.${d}</b>.<br><b>שינוי קריטי בשכבה 2:</b> ال-Src MAC הופך ל-MAC של الראוטר, ו-Dst MAC הופך ל-MAC של מחשב היעד (<b>${dstPC.mac}</b>)! בנוסף, מוצמד תג חדש: <b>802.1Q Tag: ${d}</b>.`);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 1800));
 
@@ -629,10 +739,10 @@ async function sendPacket() {
   await checkPauseState();
   await new Promise(r => setTimeout(r, 600));
 
-  log(`<div class='lbl'>[שלב 6]</div> הסוויטש מקבל את הפריים המתויג ב-Trunk, מסיר את התג ומעביר פריים נקי לפורט ה-Access של מחשב היעד ב-VLAN ${d}.`);
+  log(`<div class='lbl'>[שלב 6]</div> הסוויטש מקבל את הפריים המתויג ב-Trunk, מסיר את התג ומעביר פריים נקי לפורט ال-Access של מחשב היעד ב-VLAN ${d}.`);
   await animatePacketDetails(coords.switch.x, coords.switch.y, coords["pc"+d].x, coords["pc"+d].y, "UNTAGGED (ACCESS)", "#64748B", srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 1800);
 
-  log("<div class='lbl'>✅ הניתוב הושלם בהצלחה!</div> שים לב כיצד כתובות ה-IP נשארו קבועות לאורך כל הדרך, בעוד כתובות ה-MAC והתיוג התעדכנו במעבר בראוטר וב-Trunk.");
+  log("<div class='lbl'>✅ الניתוב הושלם בהצלחה!</div> שים לב כיצד כתובות ال-IP נשארו קבועות לאורך כל הדרך, בעוד כתובות ال-MAC והתיוג התעדכנו במעבר בראוטר וב-Trunk.");
   document.getElementById("movingPacket").style.display = "none";
   document.getElementById("sendBtn").disabled = false;
   
@@ -642,9 +752,9 @@ async function sendPacket() {
 
 const cliSteps = [
   {expect:/^encapsulation\s+dot1q\s+20\s*$/i, ok:"מעולה! הגדרת בהצלחה תיוג מסוג 802.1Q עבור VLAN 20.", cmd:"encapsulation dot1q 20"},
-  {expect:/^ip\s+address\s+10\.20\.20\.1\s+255\.255\.255\.0\s*$/i, ok:"מצוין! כתובת ה-IP הוגדרה ומשמשת כעת כ-Default Gateway.", cmd:"ip address 10.20.20.1 255.255.255.0"},
+  {expect:/^ip\s+address\s+10\.20\.20\.1\s+255\.255\.255\.0\s*$/i, ok:"מצוין! כתובת ال-IP הוגדרה ומשמשת כעת כ-Default Gateway.", cmd:"ip address 10.20.20.1 255.255.255.0"},
   {expect:/^no\s+shutdown\s*$/i, ok:"הממשק הווירטואלי עלה ועבר למצב Up!", cmd:"no shutdown"},
-  {expect:/^exit\s*$/i, ok:"יצאת כראוי. הגדרת ה-Subinterface הושלמה במלואה! 🏆", cmd:"exit"}
+  {expect:/^exit\s*$/i, ok:"יצאת כראוי. הגדרת ال-Subinterface הושלמה במלואה! 🏆", cmd:"exit"}
 ];
 let cliStep = 0;
 
@@ -676,37 +786,37 @@ function submitCmd(){
 
 const quizData = [
   {
-    q: "מה קורה כשהראוטר מקבל Frame מתויג מערוץ ה-Trunk?",
+    q: "מה קורה כשהראוטר מקבל Frame מתויג מערוץ ال-Trunk?",
     opts: ["הוא זורק אותו מיד עקב חוסר התאמה בשכבה 2", "הוא מבצע Decapsulation מסיר את התג, מנתב לפי IP, ומוסיף תג VLAN מתאים ליעד", "הוא מעביר אותו הלאה ללא כל שינוי בתג", "הוא משנה את מצב הפורט באופן אוטומטי ל-Access"],
     correct: 1,
-    explain: "הראוטר קורא את התג כדי לדעת מאיזה ממשק משנה הוא הגיע, מנתב לפי כתובת IP שכבה 3, ואז מוסיף את תג ה-VLAN החדש."
+    explain: "الראוטר קורא את התג כדי לדעת מאיזה ממשק משנה هو הגיע, מנתב לפי כתובת IP שכבה 3, ואז מוסיף את תג ال-VLAN החדש."
   },
   {
     q: "איזה סוג פורט חובה להגדיר במתג Switch בצד שמחובר ישירות אל הראוטר?",
     opts: ["Access Port", "Trunk Port", "Console Port", "Routed Port"],
     correct: 1,
-    explain: "פורט Trunk הוא הפורט שמורשה להעביר ולשמר את התיוגים של מספר רשתות VLAN במקביל על כבל פיזי יחיד."
+    explain: "פורט Trunk هو הפורט שמורשה להעביר ולשמר את התיוגים של מספר רשתות VLAN במקביל על כבל פיזי יחיד."
   },
   {
     q: "מהי מטרת הפקודה encapsulation dot1q 10 בתוך ממשק משנה Subinterface?",
-    opts: ["להפעיל כתובת IP דינמית", "לייחס את ממשק המשנה ל-VLAN 10 ולציין שימוש בפרוטוקול התיוג 802.1Q", "להגדיר את הפורט כפורט Access", "לחסום תעבורת Unicast במתג"],
+    opts: ["להפעיל כתובת IP דינמית", "לייחס את ממשק המשנה ل-VLAN 10 ולציין שימוש בפרוטוקול התיוג 802.1Q", "להגדיר את הפורט כפורט Access", "לחסום תעבורת Unicast במתג"],
     correct: 1,
-    explain: "פקודת ה-encapsulation מגדירה לראוטר באיזה תג 802.1Q להשתמש עבור ממשק המשנה הספציפי."
+    explain: "פקודת ال-encapsulation מגדירה לראוטר באיזה תג 802.1Q להשתמש עבור ממשק המשנה הספציפי."
   },
   {
-    q: "מה קורה לכתובות ה-MAC ולכתובות ה-IP של חבילה העוברת ניתוב Inter-VLAN דרך ראוטר?",
-    opts: ["כתובות ה-IP משתנות, כתובות ה-MAC נשארות קבועות", "כתובות ה-IP נשארות קבועות, כתובות ה-MAC משתנות במעבר בראוטר", "שתי הכתובות משתנות בכל הליכה", "שום כתובת לא משתנה לאורך כל הדרך"],
+    q: "מה קורה לכתובות ال-MAC ולכתובות ال-IP של חבילה העוברת ניתוב Inter-VLAN דרך ראוטר?",
+    opts: ["כתובות ال-IP משתנות, כתובות ال-MAC נשארות קבועות", "כתובות ال-IP נשארות קבועות, כתובות ال-MAC משתנות במעבר בראוטר", "שתי הכתובות משתנות בכל הליכה", "שום כתובת לא משתנה לאורך כל הדרך"],
     correct: 1,
-    explain: "כתובות ה-IP מקור ויעד נשארות זהות End-to-End, בעוד כתובות ה-MAC של שכבה 2 מתעדכנות בכל דלג Hop בנתב."
+    explain: "כתובות ال-IP מקור ויעד נשארות זהות End-to-End, בעוד כתובות ال-MAC של שכבה 2 מתעדכנות בכל דלג Hop בנתב."
   },
   {
     q: "אם שכחנו להקליד no shutdown בממשק הפיזי הראשי למשל g0/0, מה יהיה מצב ה-Subinterfaces?",
     opts: ["הם יעבדו כרגיל כי הם וירטואליים", "הם יישארו במצב Down ולא יעבירו תעבורה", "הם יעבדו רק ב-VLAN 1", "הם יעברו למצב Access"],
     correct: 1,
-    explain: "ממשקי המשנה הווירטואליים תלויים לחלוטין במצב הפיזי של ממשק האב Physical Interface. אם הוא כבוי, כולם כבויים."
+    explain: "ממשקי המשנה הווירטואליים תלויים לחלוטין במצב הפיזי של ממשק האב Physical Interface. אם هو כבוי, כולם כבויים."
   },
   {
-    q: "מהו היתרון המרכזי של Router on a Stick לעומת ניתוב מסורתי Legacy Inter-VLAN Routing?",
+    q: "מהو היתרון המרכזי של Router on a Stick לעומת ניתוב מסורתי Legacy Inter-VLAN Routing?",
     opts: ["מהירות העברת נתונים גבוהה יותר פי 10", "חיסכון בממשקים פיזיים יקרים בראוטר ובכבלים תשתיים", "ביטול הצורך בכתובות IP", "אבטחה היקפית ללא הגדרת VLAN"],
     correct: 1,
     explain: "בשיטה המסורתית נדרש פורט פיזי נפרד לכל VLAN. 'ראוטר על מקל' חוסך ממשקים ומשתמש בפורט יחיד כ-Trunk."
@@ -715,25 +825,25 @@ const quizData = [
     q: "מה קורה במידה ומנסים להגדיר כתובת IP על ממשק משנה לפני שביצענו encapsulation dot1q?",
     opts: ["הראוטר יקבל את ההגדרה כרגיל", "הראוטר יציג שגיאה וידרוש להגדיר קודם את פרוטוקול התיוג", "הראוטר יבצע ריסטארט", "הפורט הפיזי ייחסם"],
     correct: 1,
-    explain: "בציוד Cisco חובה להגדיר קודם את ה-encapsulation כדי שממשק המשנה ידע לאיזה פרוטוקול ותג לייחס את ה-IP."
+    explain: "בציוד Cisco חובה להגדיר קודם את ال-encapsulation כדי שממשק המשנה ידע לאיזה פרוטוקול ותג לייחס את ال-IP."
   },
   {
-    q: "כיצד סוויטש מתמודד עם Frame המגיע מפורט Access של VLAN 10 כאשר הוא מנתב אותו לפורט Trunk?",
-    opts: ["הוא שולח אותו ללא תג בכלל", "הוא מוסיף תג 802.1Q עם מזהה VLAN 10 ושולח ב-Trunk", "הוא משנה את כתובת ה-IP של המקור", "הוא משמיד את ה-Frame"],
+    q: "כיצד סוויטש מתמודד עם Frame המגיע מפורט Access של VLAN 10 כאשר هو מנתב אותו لפורט Trunk?",
+    opts: ["הוא שולח אותו ללא תג בכלל", "הוא מוסיף תג 802.1Q עם מזהה VLAN 10 ושולח ב-Trunk", "הוא משנה את כתובת ה-IP של המקור", "הוא משמיד את ال-Frame"],
     correct: 1,
-    explain: "פורט Access משויך ל-VLAN ספציפי. במעבר ל-Trunk, המתג מוסיף את תג ה-802.1Q המתאים."
+    explain: "פורט Access משויך ل-VLAN ספציפי. במעבר ل-Trunk, המתג מוסיף את תג ال-802.1Q המתאים."
   },
   {
-    q: "איזה טווח כתובות IP יש להגדיר במחשב קצה כדי שיוכל לתקשר עם VLANs אחרים?",
-    opts: ["כתובת IP חופשית, ו-Default Gateway המצביע ל-IP של ה-Subinterface ב-VLAN שלו", "כתובת ה-IP של המחשב ביעד בלבד", "כתובת ה-MAC של הסוויטש", "כתובת ה-IP של השרת הראשי בלבד"],
+    q: "איזה טווח כתובות IP יש להגדיר במחשב קצה כדי שюכל לתקשר עם VLANs אחרים?",
+    opts: ["כתובת IP חופשית, ו-Default Gateway המצביע ל-IP של ה-Subinterface ב-VLAN שלו", "כתובת ה-IP של המחשב ביעד בלבד", "כתובת ה-MAC של הסוויטש", "כתובת ال-IP של השרת הראשי בלבד"],
     correct: 0,
-    explain: "כל מחשב קצה חייב שה-Default Gateway שלו יהיה מוגדר לכתובת ה-IP של ה-Subinterface של הראוטר באותו VLAN."
+    explain: "כל מחשב קצה חייב שה-Default Gateway שלו יהיה מוגדר לכתובת ה-IP של ال-Subinterface של الראוטר באותו VLAN."
   },
   {
-    q: "מהו החסרון העיקרי של ארכיטקטורת Router on a Stick ברשתות גדולות מאוד?",
+    q: "מהو الحסרון העיקרי של ארכיטקטורת Router on a Stick ברשתות גדולות מאוד?",
     opts: ["הממשק הפיזי היחיד עלול להפוך לצואר לבקבוק Bottleneck של תעבורה", "היא לא תומכת ב-IPv4", "אין אפשרות להגדיר סיסמה למורה", "לא ניתן להגדיר יותר מ-2 VLANs"],
     correct: 0,
-    explain: "מאחר וכל התעבורה בין ה-VLANs עוברת הלוך-וחזור על אותו כבל פיזי, הוא עלול לעבור עומס יתר ברשתות ענקיות."
+    explain: "מאחר וכל התעבורה בין ה-VLANs עוברת הלוך-וחזור על אותו כבל פיזי, هو עלול לעבור עומס יתר ברשתות ענקיות."
   }
 ];
 
@@ -797,7 +907,7 @@ function unlockTeacherAnswers() {
     });
     markDone("s5");
   } else if (pwd !== null) {
-    alert("סיסמה שגויה! הגישה נדחתה.");
+    alert("סיסמה שגויה! الגישה נדחתה.");
   }
 }
 
