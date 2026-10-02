@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ראוטר על מקל | סימולטור לימוד משופר</title>
+<title>ראוטר על מקל סימולטור לימוד משופר</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Varela+Round&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- Tailwind CSS & Lucide Icons CDN -->
+<!-- Tailwind CSS CDN -->
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
@@ -52,16 +52,7 @@ body{
 h1,h2,h3{font-weight:700; margin:0 0 8px;}
 p{margin:0 0 12px; color:var(--muted);}
 
-.progressbar{position:sticky; top:0; z-index:40; background:rgba(250,246,238,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border); padding:14px 20px;}
-.progressbar-inner{max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:14px;}
-.progressbar-title{font-weight:700; font-size:15px; white-space:nowrap; color:var(--text);}
-.steps{display:flex; gap:6px; flex:1;}
-.step{flex:1; height:6px; border-radius:4px; background:var(--panel3); position:relative; overflow:hidden;}
-.step.done{background:var(--ok);}
-.step.active{background:var(--info);}
-.progress-pct{font-size:13px; color:var(--muted); font-family:'Fira Code',monospace; white-space:nowrap;}
-
-/* ============ HEADER (קומפקטי, רציף ומסודר בלי רווחים מיותרים) ============ */
+/* HEADER */
 header.hero{
   padding: 10px 0 12px;
   border-bottom: 1px solid var(--border);
@@ -186,21 +177,12 @@ h1.title b{color:var(--stick); font-weight: inherit;}
 .nav-btn:hover { transform: translateY(-1px); }
 .nav-btn.solid { background: var(--stick); color: #fff; border-color: transparent; }
 
-section{padding:50px 0; border-top:1px solid var(--border);}
-.section-head{margin-bottom:26px;}
-.section-num{font-family:'Fira Code',monospace; color:var(--muted2); font-size:13px; margin-bottom:6px; direction:ltr; text-align:right;}
+section{padding:30px 0; border-top:1px solid var(--border);}
+.section-head{margin-bottom:20px;}
 .section-title{font-size:24px; color:var(--text);}
 
 .card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; box-shadow:0 2px 8px rgba(0,0,0,0.03);}
-.grid2{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
-@media(max-width:720px){.grid2{grid-template-columns:1fr;}}
-
-.problem-card{border-right:4px solid var(--bad);}
-.solution-card{border-right:4px solid var(--ok);}
-.tag{display:inline-block; font-family:'Fira Code',monospace; font-size:11px; padding:3px 8px; border-radius:6px; margin:2px 4px 2px 0; direction:ltr;}
-.tag.v10{background:var(--v10-dim); color:var(--v10);}
-.tag.v20{background:var(--v20-dim); color:var(--v20);}
-.tag.v30{background:var(--v30-dim); color:var(--v30);}
+.overview-card{border-right:4px solid var(--stick);}
 
 .accordion{border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:12px; background:var(--panel);}
 .acc-head{padding:16px 18px; background:var(--panel); cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600;}
@@ -234,7 +216,7 @@ button.btn.teacher{background: linear-gradient(135deg, #10B981 0%, #059669 100%)
 .term-output{white-space:pre-wrap; color:#94A3B8; margin-bottom:10px; min-height:40px; direction:ltr; text-align:left;}
 .term-output .ok{color:#10B981; display:block; direction:rtl; text-align:right;}
 .term-output .bad{color:#EF4444; display:block; direction:rtl; text-align:right;}
-.term-output .hint{color:#F59E0B; display:block; direction:rtl; text-align:right;}
+.term-output .hint{color:#EF4444; display:block; direction:rtl; text-align:right;}
 .term-input-row{display:flex; align-items:center; gap:6px; border-top:1px solid var(--border); padding-top:12px; direction:ltr;}
 .prompt{color:#10B981; white-space:nowrap;}
 input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; font-family:'Fira Code',monospace; font-size:13px; outline:none; direction:ltr; text-align:left;}
@@ -264,36 +246,26 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 </head>
 <body>
 
-<div class="progressbar">
-  <div class="progressbar-inner">
-    <div class="progressbar-title">🥢 ראוטר על מקל</div>
-    <div class="steps" id="stepsBar"></div>
-    <div class="progress-pct" id="progressPct">0%</div>
-  </div>
-</div>
-
 <div class="wrap">
 
 <header class="hero">
   <div class="header-inner">
-    <!-- קבוצה ימנית: אוואטר, תג, כותרת וסאבטייטל -->
     <div class="header-main-group">
       <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="אווטר מסתובב" class="crazy-avatar">
       <div class="header-text-content">
-        <div class="eyebrow">Router on a Stick · Inter-VLAN Routing</div>
+        <div class="eyebrow">Router on a Stick Inter-VLAN Routing</div>
         <div class="title-row">
           <h1 class="title">ראוטר על <b>מקל</b></h1>
         </div>
-        <p class="subtitle">איך ממשק פיזי אחד בראוטר מנתב תעבורה בין כמה רשתות וירטואליות.</p>
+        <p class="subtitle">איך ממשק פיזי אחד בראוטר מנתב תעבורה בין כמה רשתות וירטואליות</p>
       </div>
     </div>
 
-    <!-- קבוצה שמאלית: פרוטוקולים וכפתורי ניווט בשורה אחת צפופה -->
     <div class="header-actions-group">
       <div class="protocol-row">
         <span class="protocol-chip">VLAN</span>
         <span class="protocol-chip">TRUNK</span>
-        <span class="protocol-chip">802.1Q</span>
+        <span class="protocol-chip">8021Q</span>
         <span class="protocol-chip">ROUTER</span>
       </div>
       <nav class="navbar">
@@ -306,52 +278,39 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
 
 <section id="s1">
 <div class="section-head">
-  <div class="section-num">01 — הבנה</div>
-  <h2 class="section-title">למה בכלל צריך "ראוטר על מקל"?</h2>
+  <h2 class="section-title">מהו ראוטר על מקל</h2>
 </div>
 
-<div class="grid2">
-  <div class="card problem-card">
-    <h3>🚧 הבעיה</h3>
-    <p>בבית הספר יש 3 מתחמי <code class="term-code-inline">VLAN</code> נפרדים על אותו מתג: <code class="tag v10">VLAN 10 · מורים</code><code class="tag v20">VLAN 20 · עיצוב</code><code class="tag v30">VLAN 30 · רשתות</code></p>
-    <p><code class="term-code-inline">VLAN</code> הוא מתחם שידור מבודד — מכשיר ב-<code class="term-code-inline">VLAN 10</code> פיזית לא יכול "לשמוע" מכשיר ב-<code class="term-code-inline">VLAN 20</code>. כדי לנתב ביניהם צריך רכיב שכבה 3 <code class="eng-text">Layer 3</code> — נתב <code class="eng-text">Router</code>.</p>
-    <p>הפתרון הנאיבי: לחבר כבל פיזי נפרד מהראוטר לכל <code class="term-code-inline">VLAN</code>. זה עובד, אך בזבזני ויקר בממשקים פיזיים.</p>
-  </div>
-  <div class="card solution-card">
-    <h3>✅ הפתרון: ראוטר על מקל</h3>
-    <p>במקום כבל לכל <code class="term-code-inline">VLAN</code> — כבל <b>אחד</b> <code class="term-code-inline">Trunk Link</code> בין המתג לראוטר, שמעביר את כל ال-<code class="term-code-inline">VLAN-ים</code> יחד, כל אחד עם תג <code class="term-code-inline">802.1Q</code> משלו.</p>
-    <p>בראוטר יוצרים ממשקי-משנה <code class="term-code-inline">subinterfaces</code> וירטואליים על גבי אותו פורט פיזי — למשל <code class="term-code-inline">g0/0.10</code>, <code class="term-code-inline">g0/0.20</code>, <code class="term-code-inline">g0/0.30</code> — כל אחד שייך ל-<code class="term-code-inline">VLAN</code> אחר.</p>
-  </div>
+<div class="card overview-card">
+  <p>כאשר ישנן כמה רשתות <code class="term-code-inline">VLAN</code> נפרדות על מתג יחיד נדרש רכיב <code class="term-code-inline">Layer 3</code> כדי לנתב תעבורה ביניהן מכיוון שכל רשת מבודדת לחלוטין חיבור כבל פיזי נפרד לכל רשת הוא בזבזני ויקר ולכן פתרון ראוטר על מקל משתמש בחיבור <code class="term-code-inline">Trunk</code> יחיד בין המתג לנתב המעביר את כל התעבורה עם תיוג <code class="term-code-inline">8021Q</code> בנתב יוצרים ממשקי משנה וירטואליים מסוג <code class="term-code-inline">subinterfaces</code> על גבי הפורט הפיזי היחיד וכך כל ממשק משנה משרת רשת וירטואלית נפרדת ביעילות</p>
 </div>
 </section>
 
 <section id="s2">
 <div class="section-head">
-  <div class="section-num">02 — איך זה עובד בפועל</div>
-  <h2 class="section-title">802.1Q, Encapsulation ו-Subinterfaces</h2>
+  <h2 class="section-title">8021Q Encapsulation ו Subinterfaces</h2>
 </div>
 
 <div id="acc1" class="accordion">
-  <div class="acc-head" onclick="toggleAcc('acc1')"><div>מהו תיוג <code class="term-code-inline">802.1Q VLAN Tagging</code>?</div><div class="acc-arrow">▾</div></div>
+  <div class="acc-head" onclick="toggleAcc('acc1')"><div>מהו תיוג <code class="term-code-inline">8021Q VLAN Tagging</code></div><div class="acc-arrow">▾</div></div>
   <div class="acc-body"><div class="acc-body-inner">
-    <p>כשמסגרת <code class="eng-text">Frame</code> עוברת בקישור <code class="term-code-inline">Trunk</code>, המתג מוסיף לה תג בכותרת שרושם "אני שייכת ל-<code class="term-code-inline">VLAN 10</code>". תוספת זו מאפשרת לערבב כמה רשתות על כבל פיזי יחיד.</p>
+    <p>כשמסגרת <code class="term-code-inline">Frame</code> עוברת בקישור <code class="term-code-inline">Trunk</code> המתג מוסיף תג בכותרת המציין את הרשת אליה היא שייכת תוספת זו מאפשרת לערבב כמה רשתות על כבל פיזי יחיד</p>
   </div></div>
 </div>
 
 <div id="acc2" class="accordion">
-  <div class="acc-head" onclick="toggleAcc('acc2')"><div>מהו <code class="term-code-inline">Subinterface</code>?</div><div class="acc-arrow">▾</div></div>
+  <div class="acc-head" onclick="toggleAcc('acc2')"><div>מהו <code class="term-code-inline">Subinterface</code></div><div class="acc-arrow">▾</div></div>
   <div class="acc-body"><div class="acc-body-inner">
-    <p>ממשק وירטואלי שנוצר מעל ממשק פיזי. למשל, על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/0.10</code> ומשייכים לו את ال-<code class="term-code-inline">IP</code> שמשמש כ-<code class="term-code-inline">Default Gateway</code> של ה-<code class="term-code-inline">VLAN</code> המקביל.</p>
+    <p>ממשק וירטואלי שנוצר מעל ממשק פיזי למשל על גבי <code class="term-code-inline">GigabitEthernet0/0</code> יוצרים את <code class="term-code-inline">g0/010</code> ומשייכים לו כתובת <code class="term-code-inline">IP</code> המשמשת כ שער ברירת מחדל <code class="term-code-inline">Default Gateway</code> של הרשת המקבילה</p>
   </div></div>
 </div>
 </section>
 
 <section id="s3">
 <div class="section-head">
-  <div class="section-num">03 — תרגול חשיבה: הדמיית רשת</div>
-  <h2 class="section-title">שלח חבילה ותעקוב אחרי המסלול שלה</h2>
+  <h2 class="section-title">תרגול חשיבה הדמיית רשת</h2>
 </div>
-<p>בחר מחשב מקור ומחשב יעד ב-<code class="term-code-inline">VLAN</code> שונה, ולחץ "שלח חבילה" כדי לראות בדיוק מה קורה בכל שלב — כולל כתובות <code class="term-code-inline">MAC</code>, <code class="term-code-inline">IP</code> ותג <code class="term-code-inline">802.1Q</code> במעבר דרך الראוטר.</p>
+<p>בחר מחשב מקור ומחשב יעד ברשתות שונות ולחץ שלח חבילה כדי לראות את המסלול בשכבות הנתונים</p>
 
 <div class="diagram-wrap">
 <svg id="netDiagram" viewBox="0 0 1000 580" style="width:100%; display:block;">
@@ -393,7 +352,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   <g transform="translate(560, 145)">
     <rect width="160" height="40" rx="6" fill="rgba(139, 92, 246, 0.1)" stroke="rgba(139, 92, 246, 0.4)" stroke-width="1"/>
     <text x="135" y="18" fill="#C084FC" font-family="Varela Round" font-size="12" font-weight="600">Trunk Link Stick</text>
-    <text x="135" y="32" fill="#94A3B8" font-family="Fira Code" font-size="10">802.1Q Tags Allowed</text>
+    <text x="135" y="32" fill="#94A3B8" font-family="Fira Code" font-size="10">8021Q Tags Allowed</text>
   </g>
 
   <!-- סוויטש -->
@@ -413,9 +372,9 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     </g>
     <g transform="translate(150, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#F59E0B" stroke-width="2"/>
-      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 10 · מורים</text>
-      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.10.10.50</text>
-      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: AA:AA:AA:10:10:50</text>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 10 מורים</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP 10.10.10.50</text>
+      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC AAAAAA101050</text>
     </g>
   </g>
 
@@ -427,9 +386,9 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     </g>
     <g transform="translate(400, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#EF4444" stroke-width="2"/>
-      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 20 · עיצוב</text>
-      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.20.20.50</text>
-      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: BB:BB:BB:20:20:50</text>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 20 עיצוב</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP 10.20.20.50</text>
+      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC BBBBBB202050</text>
     </g>
   </g>
 
@@ -441,9 +400,9 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     </g>
     <g transform="translate(650, 410)">
       <rect width="200" height="80" rx="8" fill="#1E2330" stroke="#10B981" stroke-width="2"/>
-      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 30 · רשתות</text>
-      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP: 10.30.30.50</text>
-      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC: CC:CC:CC:30:30:50</text>
+      <text x="100" y="24" text-anchor="middle" fill="#FFFFFF" font-family="Varela Round" font-size="13" font-weight="700">VLAN 30 רשתות</text>
+      <text x="100" y="46" text-anchor="middle" fill="#94A3B8" font-family="Fira Code" font-size="11">IP 10.30.30.50</text>
+      <text x="100" y="64" text-anchor="middle" fill="#64748B" font-family="Fira Code" font-size="10">MAC CCCCCC303050</text>
     </g>
   </g>
 
@@ -452,36 +411,35 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
     <rect x="-85" y="-38" width="170" height="76" rx="8" fill="#1E1B4B" stroke="#8B5CF6" stroke-width="2.5" filter="drop-shadow(0px 4px 10px rgba(0,0,0,0.6))"/>
     <path d="M -85 -38 L 0 -10 L 85 -38" fill="none" stroke="#6D28D9" stroke-width="1.5"/>
     <rect x="-80" y="-32" width="160" height="16" rx="4" id="pktHeaderBg" fill="#8B5CF6"/>
-    <text id="movingPacketLabel" x="0" y="-20" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="10" font-weight="800">TAG: 10</text>
-    <text id="pktIpSrcDst" x="0" y="-2" text-anchor="middle" fill="#E2E8F0" font-family="Fira Code" font-size="9" font-weight="600">IP: 10.10.10.50 ➔ 10.20.20.50</text>
-    <text id="pktMacSrc" x="0" y="14" text-anchor="middle" fill="#38BDF8" font-family="Fira Code" font-size="8">SrcMAC: AA:AA:AA:10:10:50</text>
-    <text id="pktMacDst" x="0" y="28" text-anchor="middle" fill="#F43F5E" font-family="Fira Code" font-size="8">DstMAC: C1:SC:00:00:00:01</text>
+    <text id="movingPacketLabel" x="0" y="-20" text-anchor="middle" fill="#FFFFFF" font-family="Fira Code" font-size="10" font-weight="800">TAG 10</text>
+    <text id="pktIpSrcDst" x="0" y="-2" text-anchor="middle" fill="#E2E8F0" font-family="Fira Code" font-size="9" font-weight="600">IP 10.10.10.50 to 10.20.20.50</text>
+    <text id="pktMacSrc" x="0" y="14" text-anchor="middle" fill="#38BDF8" font-family="Fira Code" font-size="8">SrcMAC AAAAAA101050</text>
+    <text id="pktMacDst" x="0" y="28" text-anchor="middle" fill="#F43F5E" font-family="Fira Code" font-size="8">DstMAC C1SC00000001</text>
   </g>
 </svg>
 
 <div class="controls-row">
-  <div id="selInfo" style="color:var(--muted); font-size:14px; font-weight: 500;">לחץ על מחשב מקור כדי להתחיל...</div>
+  <div id="selInfo" style="color:var(--muted); font-size:14px; font-weight: 500;">לחץ על מחשב מקור כדי להתחיל</div>
 </div>
 <div class="controls-row">
-  <button class="btn" id="sendBtn" onclick="sendPacket()" disabled>שלח חבילה בין רשתות 🚀</button>
-  <button class="btn pause" id="pauseBtn" onclick="togglePause()" disabled>השהה ⏸️</button>
+  <button class="btn" id="sendBtn" onclick="sendPacket()" disabled>שלח חבילה בין רשתות</button>
+  <button class="btn pause" id="pauseBtn" onclick="togglePause()" disabled>השהה</button>
   <button class="btn secondary" onclick="resetSim()">איפוס בחירה</button>
 </div>
 <div class="log-panel" id="simLog">
-  <div class="log-line">מחכה לבחירת מקור ויעד מהמחשבים למטה...</div>
+  <div class="log-line">מחכה לבחירת מקור ויעד מהמחשבים למטה</div>
 </div>
 </div>
 </section>
 
 <section id="s4">
 <div class="section-head">
-  <div class="section-num">04 — תרגול מעשי</div>
   <h2 class="section-title">הגדר Subinterfaces כמו מהנדס רשת</h2>
 </div>
-<p>המשימה: להגדיר את ال-<code class="term-code-inline">Subinterface</code> של <code class="term-code-inline">VLAN 20</code> מגמת עיצוב על הראוטר. הקלד את הפקודות בטרמינל, שלב אחר שלב.</p>
+<p>המשימה להגדיר את <code class="term-code-inline">Subinterface</code> של <code class="term-code-inline">VLAN 20</code> מגמת עיצוב על הראוטר הקלד את הפקודות בטרמינל שלב אחר שלב</p>
 
 <div class="task-box">
-  <div class="task-title">משימה: g0/0.20 — VLAN 20, כתובת רשת 10.20.20.1/24</div>
+  <div class="task-title">משימה g0/020 VLAN 20 כתובת רשת 10.20.20.1/24</div>
   <div class="task-progress" id="taskProgress">שלב 1 מתוך 4</div>
 </div>
 
@@ -493,7 +451,7 @@ input.term-input{flex:1; background:transparent; border:none; color:#FFFFFF; fon
   <div class="term-output" id="termOutput">Router&gt; enable
 Router# configure terminal
 Router(config)# interface g0/0.20
-<div class="hint">הקלד את פקודת ה-encapsulation המתאימה עבור vlan 20 ולחץ Enter</div></div>
+<div class="hint">הקלד את פקודת ה encapsulation המתאימה עבור vlan 20 ולחץ Enter</div></div>
   <div class="term-input-row">
     <div class="prompt" id="termPrompt">Router(config-subif)#</div>
     <input type="text" class="term-input" id="termInput" placeholder="Enter configuration command..." onkeydown="if(event.key==='Enter')submitCmd()">
@@ -503,21 +461,20 @@ Router(config)# interface g0/0.20
 
 <section id="s5">
 <div class="section-head">
-  <div class="section-num">05 — חידון חשיבה</div>
   <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
     <h2 class="section-title" style="margin:0;">בדוק את ההבנה שלך 10 שאלות</h2>
-    <button class="btn teacher" onclick="unlockTeacherAnswers()">כניסת מורה 🎓</button>
+    <button class="btn teacher" onclick="unlockTeacherAnswers()">כניסת מורה</button>
   </div>
 </div>
 <div id="quizContainer"></div>
 </section>
 
 <div class="completion" id="completionBox">
-  <h2>🎉 כל הכבוד! סיימת את כל השלבים בהצלחה!</h2>
-  <p>אתה מבין עכשיו בצורה מושלמת איך ממשק פיזי בודד משרת רשתות רבות באמצעות תיוג חכם.</p>
+  <h2>כל הכבוד סיימת את כל השלבים בהצלחה</h2>
+  <p>אתה מבין עכשיו בצורה מושלמת איך ממשק פיזי בודד משרת רשתות רבות באמצעות תיוג חכם</p>
 </div>
 
-<div class="footer-note">סימולטור לימוד אינטראקטיבי — רשתות ותקשורת 2026</div>
+<div class="footer-note">סימולטור לימוד אינטראקטיבי רשתות ותקשורת 2026</div>
 </div>
 
 <!-- כפתור עזרה צף -->
@@ -541,8 +498,8 @@ Router(config)# interface g0/0.20
             <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="תמונת בוט עזרה" class="w-full h-full object-cover rounded-full">
         </div>
 
-        <h3 class="text-lg font-black text-white mb-2">צריך עזרה במשימה?</h3>
-        <p class="text-sm text-slate-400 mb-6 leading-relaxed">בוט העזרה הרשמי של האקדמיה זמין כעת כדי לענות על שאלות, להסביר מושגים ולכוון אותך לפתרון המלא!</p>
+        <h3 class="text-lg font-black text-white mb-2">צריך עזרה במשימה</h3>
+        <p class="text-sm text-slate-400 mb-6 leading-relaxed">בוט העזרה הרשמי של האקדמיה זמין כעת כדי לענות על שאלות להסביר מושגים ולכוון אותך לפתרון המלא</p>
         
         <a href="https://gemini.google.com/gem/167016ac4a4b/66c3b83daa7940ef?usp=sharing" target="_blank" class="w-full flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-600 text-slate-950 font-black py-3 px-4 rounded-xl transition-all duration-200 shadow-lg shadow-cyan-500/10">
             <div>הפעל את בוט העזרה</div>
@@ -552,52 +509,17 @@ Router(config)# interface g0/0.20
 </div>
 
 <script>
-const PROGRESS_KEY = "ros_progress_v2";
-const stepIds = ["s1","s2","s3","s4","s5"];
-let progress = JSON.parse(localStorage.getItem(PROGRESS_KEY) || "{}");
-
-function renderStepsBar(){
-  const bar = document.getElementById("stepsBar");
-  if(!bar) return;
-  bar.innerHTML = "";
-  stepIds.forEach(id=>{
-    const d = document.createElement("div");
-    d.className = "step" + (progress[id] ? " done" : "");
-    bar.appendChild(d);
-  });
-  const done = stepIds.filter(id=>progress[id]).length;
-  document.getElementById("progressPct").textContent = Math.round(done/stepIds.length*100) + "%";
-  if(done === stepIds.length){
-    document.getElementById("completionBox").classList.add("show");
-  }
-}
-function markDone(id){
-  progress[id] = true;
-  localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
-  renderStepsBar();
-}
-renderStepsBar();
-
-const io = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting && e.intersectionRatio > 0.4){
-      markDone(e.target.id);
-    }
-  });
-}, {threshold:0.4});
-stepIds.forEach(id=>{ const el = document.getElementById(id); if(el) io.observe(el); });
-
 function toggleAcc(id){
   document.getElementById(id).classList.toggle("open");
 }
 
 const vlanColors = {10:"#F59E0B", 20:"#EF4444", 30:"#10B981"};
 const pcData = {
-  10: { ip: "10.10.10.50", mac: "AA:AA:AA:10:10:50" },
-  20: { ip: "10.20.20.50", mac: "BB:BB:BB:20:20:50" },
-  30: { ip: "10.30.30.50", mac: "CC:CC:CC:30:30:50" }
+  10: { ip: "10.10.10.50", mac: "AAAAAA101050" },
+  20: { ip: "10.20.20.50", mac: "BBBBBB202050" },
+  30: { ip: "10.30.30.50", mac: "CCCCCC303050" }
 };
-const routerMac = "C1:SC:00:00:00:01";
+const routerMac = "C1SC00000001";
 
 const coords = {
   pc10: {x:250, y:410},
@@ -618,10 +540,10 @@ function togglePause() {
   isPaused = !isPaused;
   const btn = document.getElementById("pauseBtn");
   if (isPaused) {
-    btn.textContent = "המשך ▶️";
+    btn.textContent = "המשך";
     btn.style.background = "#10B981";
   } else {
-    btn.textContent = "השהה ⏸️";
+    btn.textContent = "השהה";
     btn.style.background = "#F59E0B";
   }
 }
@@ -636,15 +558,15 @@ function selectNode(vlan) {
   if (!selSrc) {
     selSrc = vlan;
     document.getElementById("node" + vlan).style.transform = "scale(1.05)";
-    document.getElementById("selInfo").innerHTML = "נבחר מקור: <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b>. עכשיו בחר מחשב יעד (ב-VLAN שונה).";
+    document.getElementById("selInfo").innerHTML = "נבחר מקור <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b> עכשיו בחר מחשב יעד ברשת שונה";
   } else if (!selDst) {
     if (vlan === selSrc) {
-      log("⚠️ לא ניתן לבחור את אותו ال-VLAN כרשת יעד. ניתוב מתבצע רק בין רשתות שונות!");
+      log("לא ניתן לבחור את אותה רשת כרשת יעד ניתוב מתבצע רק בין רשתות שונות");
       return;
     }
     selDst = vlan;
     document.getElementById("node" + vlan).style.transform = "scale(1.05)";
-    document.getElementById("selInfo").innerHTML = "מקור: <b style='color:"+vlanColors[selSrc]+"'>VLAN "+selSrc+"</b> | יעד: <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b>";
+    document.getElementById("selInfo").innerHTML = "מקור <b style='color:"+vlanColors[selSrc]+"'>VLAN "+selSrc+"</b> יעד <b style='color:"+vlanColors[vlan]+"'>VLAN "+vlan+"</b>";
     document.getElementById("sendBtn").disabled = false;
   }
 }
@@ -662,7 +584,7 @@ function resetSim(){
   isPaused = false;
   isAnimating = false;
   const pauseBtn = document.getElementById("pauseBtn");
-  pauseBtn.textContent = "השהה ⏸️";
+  pauseBtn.textContent = "השהה";
   pauseBtn.style.background = "#F59E0B";
   pauseBtn.disabled = true;
 
@@ -670,9 +592,9 @@ function resetSim(){
   if(selDst) document.getElementById("node" + selDst).style.transform = "none";
   selSrc = null;
   selDst = null;
-  document.getElementById("selInfo").textContent = "לחץ על מחשב מקור כדי להתחיל...";
+  document.getElementById("selInfo").textContent = "לחץ על מחשב מקור כדי להתחיל";
   document.getElementById("sendBtn").disabled = true;
-  document.getElementById("simLog").innerHTML = '<div class="log-line">מחכה לבחירת מקור ויעד מהמחשבים למטה...</div>';
+  document.getElementById("simLog").innerHTML = '<div class="log-line">מחכה לבחירת מקור ויעד מהמחשבים למטה</div>';
   document.getElementById("movingPacket").style.display = "none";
 }
 
@@ -686,9 +608,9 @@ async function animatePacketDetails(x1, y1, x2, y2, tagLabel, tagColor, srcIp, d
 
   headerBg.setAttribute("fill", tagColor);
   tagTxt.textContent = tagLabel;
-  ipTxt.textContent = `IP: ${srcIp} ➔ ${dstIp}`;
-  macSrcTxt.textContent = `SrcMAC: ${srcMac}`;
-  macDstTxt.textContent = `DstMAC: ${dstMac}`;
+  ipTxt.textContent = `IP ${srcIp} to ${dstIp}`;
+  macSrcTxt.textContent = `SrcMAC ${srcMac}`;
+  macDstTxt.textContent = `DstMAC ${dstMac}`;
 
   pkt.style.display = "block";
   
@@ -716,33 +638,33 @@ async function sendPacket() {
   const srcPC = pcData[s];
   const dstPC = pcData[d];
   
-  log(`<div class='lbl'>[שלב 1]</div> המחשב ב-VLAN ${s} יוצר חבילה. IP מקור: <b>${srcPC.ip}</b> | IP יעד: <b>${dstPC.ip}</b>.<br>בשכבה 2: Src MAC هو של המחשב, ו-Dst MAC הוא של ה-Gateway (הראוטר). הקישור هو Access ולכן החבילה יוצאת <b>ללא תיוג 802.1Q</b>.`);
-  await animatePacketDetails(coords["pc"+s].x, coords["pc"+s].y, coords.switch.x, coords.switch.y, "UNTAGGED (ACCESS)", "#64748B", srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 1800);
+  log(`<div class='lbl'>שלב 1</div> המחשב ב VLAN ${s} יוצר חבילה כתובת מקור ${srcPC.ip} כתובת יעד ${dstPC.ip} בשכבה 2 כתובת המקור היא של המחשב וכתובת היעד היא של הנתב החיבור הוא גישה ולכן החבילה יוצאת ללא תיוג`);
+  await animatePacketDetails(coords["pc"+s].x, coords["pc"+s].y, coords.switch.x, coords.switch.y, "UNTAGGED ACCESS", "#64748B", srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 1800);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 600));
 
-  log(`<div class='lbl'>[שלב 2]</div> הסוויטש מקבל את הפריים בפורט Access של VLAN ${s}. בהעברה ב-Trunk הוא <b>מוסיף תג 802.1Q Tag: ${s}</b> בכותרת הפריים.`);
-  await animatePacketDetails(coords.switch.x, coords.switch.y, coords.router.x, coords.router.y, `TAG: VLAN ${s}`, vlanColors[s], srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 2000);
+  log(`<div class='lbl'>שלב 2</div> המתג מקבל את הנתונים בפורט גישה של VLAN ${s} בהעברה ב ערוץ מוסיף תג VLAN ${s} בכותרת`);
+  await animatePacketDetails(coords.switch.x, coords.switch.y, coords.router.x, coords.router.y, `TAG VLAN ${s}`, vlanColors[s], srcPC.ip, dstPC.ip, srcPC.mac, routerMac, 2000);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 800));
 
-  log(`<div class='lbl'>[שלב 3]</div> الראוטר מקבל את החבילה בממשק המשנה <b style='color:${vlanColors[s]}'>g0/0.${s}</b>, מסיר את התג (Decapsulation) ובודק את טבלת הניתוב לפי IP היעד.`);
+  log(`<div class='lbl'>שלב 3</div> הנתב מקבל את החבילה בממשק המשנה <b style='color:${vlanColors[s]}'>g0/0.${s}</b> מסיר את התג ובודק את טבלת הניתוב לפי כתובת היעד`);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 1500));
   
-  log(`<div class='lbl'>[שלב 4 - שינוי MAC והחלפת תג!]</div> הראוטר מנתב את החבילה לממשק <b style='color:${vlanColors[d]}'>g0/0.${d}</b>.<br><b>שינוי קריטי בשכבה 2:</b> ال-Src MAC הופך ל-MAC של الראוטר, ו-Dst MAC הופך ל-MAC של מחשב היעד (<b>${dstPC.mac}</b>)! בנוסף, מוצמד תג חדש: <b>802.1Q Tag: ${d}</b>.`);
+  log(`<div class='lbl'>שלב 4 שינוי כתובות והחלפת תג</div> הנתב מנתב את החבילה לממשק <b style='color:${vlanColors[d]}'>g0/0.${d}</b> שינוי בשכבה 2 כתובת המקור הופכת לכתובת הנתב וכתובת היעד הופכת לכתובת המחשב המיועד בנוסף מוצמד תג חדש VLAN ${d}`);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 1800));
 
-  log(`<div class='lbl'>[שלב 5]</div> החבילה נשלחת בחזרה <b>על אותו כבל פיזי (המקל)</b> עם כתובות ה-MAC החדשות ותג VLAN ${d}.`);
-  await animatePacketDetails(coords.router.x, coords.router.y, coords.switch.x, coords.switch.y, `TAG: VLAN ${d}`, vlanColors[d], srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 2000);
+  log(`<div class='lbl'>שלב 5</div> החבילה נשלחת בחזרה על אותו כבל פיזי עם כתובות חדשות ותג VLAN ${d}`);
+  await animatePacketDetails(coords.router.x, coords.router.y, coords.switch.x, coords.switch.y, `TAG VLAN ${d}`, vlanColors[d], srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 2000);
   await checkPauseState();
   await new Promise(r => setTimeout(r, 600));
 
-  log(`<div class='lbl'>[שלב 6]</div> הסוויטש מקבל את הפריים המתויג ב-Trunk, מסיר את התג ומעביר פריים נקי לפורט ال-Access של מחשב היעד ב-VLAN ${d}.`);
-  await animatePacketDetails(coords.switch.x, coords.switch.y, coords["pc"+d].x, coords["pc"+d].y, "UNTAGGED (ACCESS)", "#64748B", srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 1800);
+  log(`<div class='lbl'>שלב 6</div> המתג מקבל את המסגרת המתויגת מסיר את התג ומעביר מסגרת נקייה לפורט הגישה של מחשב היעד ב VLAN ${d}`);
+  await animatePacketDetails(coords.switch.x, coords.switch.y, coords["pc"+d].x, coords["pc"+d].y, "UNTAGGED ACCESS", "#64748B", srcPC.ip, dstPC.ip, routerMac, dstPC.mac, 1800);
 
-  log("<div class='lbl'>✅ الניתוב הושלם בהצלחה!</div> שים לב כיצד כתובות ال-IP נשארו קבועות לאורך כל הדרך, בעוד כתובות ال-MAC והתיוג התעדכנו במעבר בראוטר וב-Trunk.");
+  log("<div class='lbl'> הניתוב הושלם בהצלחה</div> שים לב כיצד כתובות ה IP נשארו קבועות לאורך כל הדרך בעוד כתובות ה MAC והתיוג התעדכנו במעבר בראוטר וב ערוץ");
   document.getElementById("movingPacket").style.display = "none";
   document.getElementById("sendBtn").disabled = false;
   
@@ -751,10 +673,10 @@ async function sendPacket() {
 }
 
 const cliSteps = [
-  {expect:/^encapsulation\s+dot1q\s+20\s*$/i, ok:"מעולה! הגדרת בהצלחה תיוג מסוג 802.1Q עבור VLAN 20.", cmd:"encapsulation dot1q 20"},
-  {expect:/^ip\s+address\s+10\.20\.20\.1\s+255\.255\.255\.0\s*$/i, ok:"מצוין! כתובת ال-IP הוגדרה ומשמשת כעת כ-Default Gateway.", cmd:"ip address 10.20.20.1 255.255.255.0"},
-  {expect:/^no\s+shutdown\s*$/i, ok:"הממשק הווירטואלי עלה ועבר למצב Up!", cmd:"no shutdown"},
-  {expect:/^exit\s*$/i, ok:"יצאת כראוי. הגדרת ال-Subinterface הושלמה במלואה! 🏆", cmd:"exit"}
+  {expect:/^encapsulation\s+dot1q\s+20\s*$/i, ok:"מעולה הגדרת בהצלחה תיוג מסוג 8021Q עבור VLAN 20", cmd:"encapsulation dot1q 20"},
+  {expect:/^ip\s+address\s+10\.20\.20\.1\s+255\.255\.255\.0\s*$/i, ok:"מצוין כתובת ה IP הוגדרה ומשמשת כעת כ שער ברירת מחדל", cmd:"ip address 10.20.20.1 255.255.255.0"},
+  {expect:/^no\s+shutdown\s*$/i, ok:"הממשק הווירטואלי עלה ועבר למצב פעיל", cmd:"no shutdown"},
+  {expect:/^exit\s*$/i, ok:"יצאת כראוי הגדרת ממשק המשנה הושלמה במלואה", cmd:"exit"}
 ];
 let cliStep = 0;
 
@@ -768,17 +690,16 @@ function submitCmd(){
   
   const step = cliSteps[cliStep];
   if(step.expect.test(val)){
-    output.innerHTML += "\n" + prompt + " " + val + "\n<div class='ok'>✔ " + step.ok + "</div>";
+    output.innerHTML += "\n" + prompt + " " + val + "\n<div class='ok'>" + step.ok + "</div>";
     cliStep++;
     if(cliStep < cliSteps.length){
-      output.innerHTML += "\n<div class='hint'>שלב הבא: הזן את הפקודה הבאה ברצף הלוגי</div>";
+      output.innerHTML += "\n<div class='hint'>שלב הבא הזן את הפקודה הבאה ברצף הלוגי</div>";
       document.getElementById("taskProgress").textContent = "שלב " + (cliStep+1) + " מתוך " + cliSteps.length;
     } else {
-      document.getElementById("taskProgress").textContent = "הושלם בהצלחה! ✅";
-      markDone("s4");
+      document.getElementById("taskProgress").textContent = "הושלם בהצלחה";
     }
   } else {
-    output.innerHTML += "\n" + prompt + " " + val + "\n<div class='bad'>✘ פקודה שגויה או לא מדויקת במצב זה. נסה שוב.</div>";
+    output.innerHTML += "\n" + prompt + " " + val + "\n<div class='bad'>פקודה שגויה או לא מדויקת במצב זה נסה שוב</div>";
   }
   input.value = "";
   output.scrollTop = output.scrollHeight;
@@ -786,64 +707,64 @@ function submitCmd(){
 
 const quizData = [
   {
-    q: "מה קורה כשהראוטר מקבל Frame מתויג מערוץ ال-Trunk?",
-    opts: ["הוא זורק אותו מיד עקב חוסר התאמה בשכבה 2", "הוא מבצע Decapsulation מסיר את התג, מנתב לפי IP, ומוסיף תג VLAN מתאים ליעד", "הוא מעביר אותו הלאה ללא כל שינוי בתג", "הוא משנה את מצב הפורט באופן אוטומטי ל-Access"],
+    q: "מה קורה כשהראוטר מקבל מסגרת מתויגת מערוץ התיוג",
+    opts: ["הוא זורק אותה מיד עקב חוסר התאמה בשכבה 2", "הוא מסיר את התג מנתב לפי כתובת היעד ומוסיף תג מתאים ליעד", "הוא מעביר אותה הלאה ללא כל שינוי בתג", "הוא משנה את מצב הפורט באופן אוטומטי לגישה"],
     correct: 1,
-    explain: "الראוטר קורא את התג כדי לדעת מאיזה ממשק משנה هو הגיע, מנתב לפי כתובת IP שכבה 3, ואז מוסיף את תג ال-VLAN החדש."
+    explain: "הראוטר קורא את התג כדי לדעת מאיזה ממשק משנה היא הגיעה מנתב לפי כתובת בשכבה 3 ואז מוסיף את התג החדש"
   },
   {
-    q: "איזה סוג פורט חובה להגדיר במתג Switch בצד שמחובר ישירות אל הראוטר?",
+    q: "איזה סוג פורט חובה להגדיר במתג בצד שמחובר ישירות אל הראוטר",
     opts: ["Access Port", "Trunk Port", "Console Port", "Routed Port"],
     correct: 1,
-    explain: "פורט Trunk هو הפורט שמורשה להעביר ולשמר את התיוגים של מספר רשתות VLAN במקביל על כבל פיזי יחיד."
+    explain: "פורט Trunk הוא הפורט שמורשה להעביר ולשמר את התיוגים של מספר רשתות במקביל על כבל פיזי יחיד"
   },
   {
-    q: "מהי מטרת הפקודה encapsulation dot1q 10 בתוך ממשק משנה Subinterface?",
-    opts: ["להפעיל כתובת IP דינמית", "לייחס את ממשק המשנה ل-VLAN 10 ולציין שימוש בפרוטוקול התיוג 802.1Q", "להגדיר את הפורט כפורט Access", "לחסום תעבורת Unicast במתג"],
+    q: "מהי מטרת הפקודה encapsulation dot1q 10 בתוך ממשק משנה",
+    opts: ["להפעיל כתובת דינמית", "לייחס את ממשק המשנה לרשת 10 ולציין שימוש בפרוטוקול התיוג 8021Q", "להגדיר את הפורט כפורט גישה", "לחסום תעבורה במתג"],
     correct: 1,
-    explain: "פקודת ال-encapsulation מגדירה לראוטר באיזה תג 802.1Q להשתמש עבור ממשק המשנה הספציפי."
+    explain: "פקודת התיוג מגדירה לראוטר באיזה תג 8021Q להשתמש עבור ממשק המשנה הספציפי"
   },
   {
-    q: "מה קורה לכתובות ال-MAC ולכתובות ال-IP של חבילה העוברת ניתוב Inter-VLAN דרך ראוטר?",
-    opts: ["כתובות ال-IP משתנות, כתובות ال-MAC נשארות קבועות", "כתובות ال-IP נשארות קבועות, כתובות ال-MAC משתנות במעבר בראוטר", "שתי הכתובות משתנות בכל הליכה", "שום כתובת לא משתנה לאורך כל הדרך"],
+    q: "מה קורה לכתובות ה MAC ולכתובות ה IP של חבילה העוברת ניתוב דרך ראוטר",
+    opts: ["כתובות ה IP משתנות כתובות ה MAC נשארות קבועות", "כתובות ה IP נשארות קבועות כתובות ה MAC משתנות במעבר בראוטר", "שתי הכתובות משתנות בכל מעבר", "שום כתובת לא משתנה לאורך כל הדרך"],
     correct: 1,
-    explain: "כתובות ال-IP מקור ויעד נשארות זהות End-to-End, בעוד כתובות ال-MAC של שכבה 2 מתעדכנות בכל דלג Hop בנתב."
+    explain: "כתובות ה IP מקור ויעד נשארות זהות לאורך כל הדרך בעוד כתובות ה MAC של שכבה 2 מתעדכנות בכל מעבר בנתב"
   },
   {
-    q: "אם שכחנו להקליד no shutdown בממשק הפיזי הראשי למשל g0/0, מה יהיה מצב ה-Subinterfaces?",
-    opts: ["הם יעבדו כרגיל כי הם וירטואליים", "הם יישארו במצב Down ולא יעבירו תעבורה", "הם יעבדו רק ב-VLAN 1", "הם יעברו למצב Access"],
+    q: "אם שכחנו להפעיל את הממשק הפיזי הראשי מה יהיה מצב ממשקי המשנה",
+    opts: ["הם יעבדו כרגיל כי הם וירטואליים", "הם יישארו במצב לא פעיל ולא יעבירו תעבורה", "הם יעבדו רק ברשת הראשית", "הם יעברו למצב גישה"],
     correct: 1,
-    explain: "ממשקי המשנה הווירטואליים תלויים לחלוטין במצב הפיזי של ממשק האב Physical Interface. אם هو כבוי, כולם כבויים."
+    explain: "ממשקי המשנה הווירטואליים תלויים לחלוטין במצב הפיזי של ממשק האב אם הוא כבוי כולם כבויים"
   },
   {
-    q: "מהو היתרון המרכזי של Router on a Stick לעומת ניתוב מסורתי Legacy Inter-VLAN Routing?",
+    q: "מהו היתרון המרכזי של ראוטר על מקל לעומת ניתוב מסורתי",
     opts: ["מהירות העברת נתונים גבוהה יותר פי 10", "חיסכון בממשקים פיזיים יקרים בראוטר ובכבלים תשתיים", "ביטול הצורך בכתובות IP", "אבטחה היקפית ללא הגדרת VLAN"],
     correct: 1,
-    explain: "בשיטה המסורתית נדרש פורט פיזי נפרד לכל VLAN. 'ראוטר על מקל' חוסך ממשקים ומשתמש בפורט יחיד כ-Trunk."
+    explain: "בשיטה המסורתית נדרש פורט פיזי נפרד לכל רשת ראוטר על מקל חוסך ממשקים ומשתמש בפורט יחיד כערוץ מרובה רשתות"
   },
   {
-    q: "מה קורה במידה ומנסים להגדיר כתובת IP על ממשק משנה לפני שביצענו encapsulation dot1q?",
-    opts: ["הראוטר יקבל את ההגדרה כרגיל", "הראוטר יציג שגיאה וידרוש להגדיר קודם את פרוטוקול התיוג", "הראוטר יבצע ריסטארט", "הפורט הפיזי ייחסם"],
+    q: "מה קורה במידה ומנסים להגדיר כתובת IP על ממשק משנה לפני שביצענו הגדרת תיוג",
+    opts: ["הראוטר יקבל את ההגדרה כרגיל", "הראוטר יציג שגיאה וידרוש להגדיר קודם את פרוטוקול התיוג", "הראוטר יבצע איפוס", "הפורט הפיזי ייחסם"],
     correct: 1,
-    explain: "בציוד Cisco חובה להגדיר קודם את ال-encapsulation כדי שממשק המשנה ידע לאיזה פרוטוקול ותג לייחס את ال-IP."
+    explain: "בציוד תקשורת חובה להגדיר קודם את התיוג כדי שממשק המשנה ידע לאיזה פרוטוקול ותג לייחס את ה IP"
   },
   {
-    q: "כיצד סוויטש מתמודד עם Frame המגיע מפורט Access של VLAN 10 כאשר هو מנתב אותו لפורט Trunk?",
-    opts: ["הוא שולח אותו ללא תג בכלל", "הוא מוסיף תג 802.1Q עם מזהה VLAN 10 ושולח ב-Trunk", "הוא משנה את כתובת ה-IP של המקור", "הוא משמיד את ال-Frame"],
+    q: "כיצד מתג מתמודד עם מסגרת המגיעה מפורט גישה של רשת 10 כאשר הוא מעביר אותה לפורט ערוץ",
+    opts: ["הוא שולח אותה ללא תג בכלל", "הוא מוסיף תג 8021Q עם מזהה רשת 10 ושולח בערוץ", "הוא משנה את כתובת ה IP של המקור", "הוא משמיד את המסגרת"],
     correct: 1,
-    explain: "פורט Access משויך ل-VLAN ספציפי. במעבר ل-Trunk, המתג מוסיף את תג ال-802.1Q המתאים."
+    explain: "פורט גישה משויך לרשת ספציפית במעבר לערוץ מרובה רשתות המתג מוסיף את התג המתאים"
   },
   {
-    q: "איזה טווח כתובות IP יש להגדיר במחשב קצה כדי שюכל לתקשר עם VLANs אחרים?",
-    opts: ["כתובת IP חופשית, ו-Default Gateway המצביע ל-IP של ה-Subinterface ב-VLAN שלו", "כתובת ה-IP של המחשב ביעד בלבד", "כתובת ה-MAC של הסוויטש", "כתובת ال-IP של השרת הראשי בלבד"],
+    q: "איזה הגדרת כתובת יש להגדיר במחשב קצה כדי שיוכל לתקשר עם רשתות אחרות",
+    opts: ["כתובת IP חופשית ו שער ברירת מחדל המצביע ל IP של ממשק המשנה ברשת שלו", "כתובת ה IP של המחשב ביעד בלבד", "כתובת ה MAC של המתג", "כתובת ה IP של השרת הראשי בלבד"],
     correct: 0,
-    explain: "כל מחשב קצה חייב שה-Default Gateway שלו יהיה מוגדר לכתובת ה-IP של ال-Subinterface של الראוטר באותו VLAN."
+    explain: "כל מחשב קצה חייב ששער ברירת המחדל שלו יהיה מוגדר לכתובת ה IP של ממשק המשנה של הראוטר באותה רשת"
   },
   {
-    q: "מהو الحסרון העיקרי של ארכיטקטורת Router on a Stick ברשתות גדולות מאוד?",
-    opts: ["הממשק הפיזי היחיד עלול להפוך לצואר לבקבוק Bottleneck של תעבורה", "היא לא תומכת ב-IPv4", "אין אפשרות להגדיר סיסמה למורה", "לא ניתן להגדיר יותר מ-2 VLANs"],
+    q: "מהו החיסרון העיקרי של ארכיטקטורת ראוטר על מקל ברשתות גדולות מאוד",
+    opts: ["הממשק הפיזי היחיד עלול להפוך לצואר לבקבוק של תעבורה", "היא לא תומכת ב פרוטוקולי תקשורת מתקדמים", "אין אפשרות להגדיר סיסמה", "לא ניתן להגדיר יותר מ 2 רשתות"],
     correct: 0,
-    explain: "מאחר וכל התעבורה בין ה-VLANs עוברת הלוך-וחזור על אותו כבל פיזי, هو עלול לעבור עומס יתר ברשתות ענקיות."
+    explain: "מאחר וכל התעבורה בין הרשתות עוברת הלוך וחזור על אותו כבל פיזי הוא עלול לעבור עומס יתר ברשתות ענקיות"
   }
 ];
 
@@ -885,15 +806,12 @@ function answerQuiz(qi, oi){
     else if(i === oi) el.classList.add("wrong");
   });
   document.getElementById("explain-"+qi).classList.add("show");
-  if(Object.keys(quizAnswered).length === quizData.length){
-    markDone("s5");
-  }
 }
 
 function unlockTeacherAnswers() {
-  const pwd = prompt("הזן סיסמת מורה לצפייה בתשובות הנכונות:");
+  const pwd = prompt("הזן סיסמת מורה לצפייה בתשובות הנכונות");
   if (pwd === "sahar") {
-    alert("אימות מורה הצליח! כל התשובות הנכונות וההסברים מוצגים כעת.");
+    alert("אימות מורה הצליח כל התשובות הנכונות וההסברים מוצגים כעת");
     quizData.forEach((item, qi) => {
       quizAnswered[qi] = true;
       const opts = document.querySelectorAll(".quiz-q")[qi].querySelectorAll(".quiz-opt");
@@ -905,9 +823,8 @@ function unlockTeacherAnswers() {
       });
       document.getElementById("explain-" + qi).classList.add("show");
     });
-    markDone("s5");
   } else if (pwd !== null) {
-    alert("סיסמה שגויה! الגישה נדחתה.");
+    alert("סיסמה שגויה הגישה נדחתה");
   }
 }
 
